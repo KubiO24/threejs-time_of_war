@@ -36,11 +36,9 @@ class Game {
 
             this.raycaster.setFromCamera(this.mouseVector, this.camera);
 
-            let intersects = this.raycaster.intersectObjects(this.scene);
-            console.log(intersects)
+            let intersects = this.raycaster.intersectObjects(this.scene.children);
             if (intersects.length > 0) {
                 const clickedObject = intersects[0].object;
-                console.log(clickedObject)
                 
             }
         });
