@@ -16,8 +16,10 @@ class Net {
     login = (username) => {
         this.socket.emit("login", username, (response) => {
             console.log(response.error)
-            if(!response.error) this.username = username;
-            console.log(this.username)
+            if(!response.error) {
+                this.username = username;
+                ui.playMusic();
+            } 
         });   
     }
 }
