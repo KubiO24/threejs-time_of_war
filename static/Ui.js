@@ -20,6 +20,6 @@ class Ui {
         }
         document.querySelector('#emptyUsername').style.display = 'none';
 
-        console.log(username)
+        net.login(username);
     }
 }
