@@ -28,8 +28,11 @@
             <h1>Time of War</h1>      
 
             <div id="inputs">
-                <input type="text" placeholder="username">
-                <button onclick="ui.play()">Play</button>
+                <div id="input">
+                    <input id="usernameInput" type="text" placeholder="username">
+                    <span id="emptyUsername">*</span>
+                </div>
+                <button onclick="ui.login()">Play</button>
             </div>  
         </div>       
     </div>  
