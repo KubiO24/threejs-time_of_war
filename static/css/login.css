@@ -141,3 +141,10 @@
     50% { background-position: 400% 0; }
     100% { background-position: 0 0; }
 }
+
+#loginBox #inputs #errorLoginMessage {
+    margin-top: 20px;
+    color: #d1a515;
+    font-family: 'Cinzel', serif;
+
+}

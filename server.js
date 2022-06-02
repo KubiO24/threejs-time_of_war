@@ -26,12 +26,18 @@ const io = socket(server);
 
 io.on("connection", (socket) => {
     socket.on("login", (username, callback) => {
+        if(userList.length >= 2) {
+            callback({error: true, message: '2 players are already playing'});
+            return;
+        }
+
         if(userList.includes(username)) {
-            callback({error: true});
+            callback({error: true, message: 'Username taken by other player'});
             return;
         }
     
         userList.push(username)
         callback({error: false});
+        return;
     });
 });

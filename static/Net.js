@@ -15,11 +15,12 @@ class Net {
 
     login = (username) => {
         this.socket.emit("login", username, (response) => {
-            console.log(response.error)
             if(!response.error) {
                 this.username = username;
                 ui.playMusic();
-            } 
+            }else {
+                document.querySelector('#errorLoginMessage').innerHTML = response.message;
+            }
         });   
     }
 }
