@@ -28,4 +28,20 @@ class Ui {
     startGame = () => {
         document.getElementById('loginScreen').style.display = 'none';
     }
+
+    updatePoints = (points) => {
+        document.getElementById('pointsValue').innerHTML = points;
+    }
+
+    updatePointsSpeed = (speed) => {
+        document.getElementById('pointsSpeed').innerHTML = speed;
+    }
+
+    toggleUpgrades = () => {   
+        if(document.getElementById('upgradesMenu').style.transform == 'none') {
+            document.getElementById('upgradesMenu').style.transform = 'translateY(483px)'
+        }else {
+            document.getElementById('upgradesMenu').style.transform = 'none';
+        }
+    }
 }

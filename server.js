@@ -41,7 +41,6 @@ io.on("connection", (socket) => {
         if(userList.length == 2) {
             callback({error: false, message: 'starting'});
             io.emit("waitingForSecondPlayer", userList[0]);
-            console.log('starting')
         }else {
             callback({error: false, message: 'waiting'});
         }    
