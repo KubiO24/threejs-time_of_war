@@ -11,16 +11,29 @@ class Net {
             fetch("/resetUser", { method: "post", body, headers })
             e.returnValue = null;
         }, false);
+
     }
 
     login = (username) => {
         this.socket.emit("login", username, (response) => {
-            if(!response.error) {
-                this.username = username;
-                ui.playMusic();
-            }else {
+            if(response.error) {
                 document.querySelector('#errorLoginMessage').innerHTML = response.message;
+                return;        
             }
+
+            this.username = username;
+            
+            if(response.message == 'waiting') {
+                ui.startWaitingForSecondPlayer();   
+                this.socket.on("waitingForSecondPlayer", (secondPlayer) => {
+                    this.secondUsername = secondPlayer;
+                    ui.startGame();
+                    return;
+                });          
+            }else if(response.message == 'starting') {
+                ui.startGame(); 
+            }
+            return;
         });   
     }
 }

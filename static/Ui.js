@@ -18,4 +18,14 @@ class Ui {
         };
         window.removeEventListener("mouseover", this.playMusic)
     }
+
+    startWaitingForSecondPlayer = () => {
+        document.getElementById('inputs').style.display = 'none'
+        document.getElementById('waitingScreen').style.display = 'flex'
+        this.playMusic();
+    }
+
+    startGame = () => {
+        document.getElementById('loginScreen').style.display = 'none';
+    }
 }
