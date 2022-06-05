@@ -2,6 +2,10 @@ body {
     overflow: hidden;
 }
 
+#ui {
+    display: none;
+}
+
 #ui #points {
     position: absolute;
     top: 0;
@@ -46,7 +50,7 @@ body {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.9);
     color: white;
-    transform: translateY(483px);
+    transform: translateY(480px);
     transition: transform 0.25s ease-in-out;
     user-select: none;
 }
@@ -55,7 +59,7 @@ body {
     font-size: 5em;
     cursor: pointer;
     margin-top: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 17px;
 }
 
 #ui #upgradesMenu hr {
@@ -95,4 +99,5 @@ body {
     padding: 10px 20px;
     border-radius: 10px;
     font-size: 1.25em;
+    cursor: pointer;
 }

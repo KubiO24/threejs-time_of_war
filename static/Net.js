@@ -4,7 +4,7 @@ class Net {
         this.init();
     }
 
-    init() {
+    init = () => {
         window.addEventListener("beforeunload", function (e) {
             const body = JSON.stringify({username: net.username});
             const headers = { "Content-Type": "application/json" }

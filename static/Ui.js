@@ -27,6 +27,7 @@ class Ui {
 
     startGame = () => {
         document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('ui').style.display = 'block';
     }
 
     updatePoints = (points) => {
@@ -39,7 +40,7 @@ class Ui {
 
     toggleUpgrades = () => {   
         if(document.getElementById('upgradesMenu').style.transform == 'none') {
-            document.getElementById('upgradesMenu').style.transform = 'translateY(483px)'
+            document.getElementById('upgradesMenu').style.transform = 'translateY(480px)'
         }else {
             document.getElementById('upgradesMenu').style.transform = 'none';
         }

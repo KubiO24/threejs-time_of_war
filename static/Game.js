@@ -22,6 +22,21 @@ class Game {
         const light = new THREE.HemisphereLight( '#ffffff', '#000000', 1 ); // skyColor, groundColor, intensity
         this.scene.add( light );
 
+        const groundGeometry = new THREE.PlaneGeometry( 10000, 10000 );
+        const groundMaterial = new THREE.MeshBasicMaterial( {
+            // color: 0xffff00,
+            side: THREE.DoubleSide,
+            map: new THREE.TextureLoader().load('./materials/ground.png', function (texture) {
+                texture.wrapS = THREE.RepeatWrapping;
+                texture.wrapT = THREE.RepeatWrapping;
+                texture.repeat.x = 10000 / 30;
+                texture.repeat.y = 10000 / 30;
+            })
+        } );
+        this.ground = new THREE.Mesh( groundGeometry, groundMaterial );
+        this.ground.rotation.x = Math.PI / 2;
+        this.scene.add( this.ground )
+
         const tower = new Tower();
         this.scene.add( tower );
 

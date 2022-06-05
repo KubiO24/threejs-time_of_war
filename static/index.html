@@ -21,6 +21,8 @@
     <script src="./Game.js"></script>
     <script src="./Ui.js"></script>
     <script src="./Net.js"></script>
+    <script src="./Points.js"></script>
+    <script src="./Upgrades.js"></script>
     <script src="./Main.js"></script>
     <script src="./objects/Tower.js"></script>
 </head>
@@ -63,8 +65,8 @@
                 <div class="upgradeBlock">
                     <h1 style="color: #ecc74d;">Points</h1>
                     <p>Points per second x1.1</p>
-                    <button>
-                        <span>1000</span> points
+                    <button onclick="upgrades.upgradePoints()">
+                        <span id="pointsUpgradeCost"></span> points
                     </button>
                 </div>
 
