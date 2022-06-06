@@ -3,11 +3,13 @@ let net;
 let ui;
 let points;
 let upgrades;
+let units;
 
 window.onload = () => {
+    points = new Points();
+    units = new Units();
     game = new Game();
     net = new Net();
-    ui = new Ui();
-    points = new Points();
     upgrades = new Upgrades();
+    ui = new Ui();
 }

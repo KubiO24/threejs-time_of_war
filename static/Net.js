@@ -27,13 +27,18 @@ class Net {
                 ui.startWaitingForSecondPlayer();   
                 this.socket.on("waitingForSecondPlayer", (secondPlayer) => {
                     this.secondUsername = secondPlayer;
-                    ui.startGame();
+                    this.startGame();
                     return;
                 });          
             }else if(response.message == 'starting') {
-                ui.startGame(); 
+                this.startGame(); 
             }
             return;
         });   
+    }
+
+    startGame = () => {
+        ui.startGame();
+        points.startGame();
     }
 }

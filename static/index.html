@@ -23,6 +23,7 @@
     <script src="./Net.js"></script>
     <script src="./Points.js"></script>
     <script src="./Upgrades.js"></script>
+    <script src="./Units.js"></script>
     <script src="./Main.js"></script>
     <script src="./objects/Tower.js"></script>
 </head>
@@ -53,9 +54,9 @@
         <div id="points">
             <img src="./img/coin.png" alt="coin">
             &#160;
-            <span id="pointsValue">200</span>
+            <span id="pointsValue">0</span>
             &#160;&#160;
-            <div>+<span id="pointsSpeed">10</span>/s</div>      
+            <div>+<span id="pointsSpeed">0</span>/s</div>      
         </div>
 
         <div id="upgradesMenu">
@@ -64,42 +65,42 @@
             <div id="upgradesList">
                 <div class="upgradeBlock">
                     <h1 style="color: #ecc74d;">Points</h1>
-                    <p>Points per second x1.1</p>
-                    <button onclick="upgrades.upgradePoints()">
-                        <span id="pointsUpgradeCost"></span> points
+                    <p>Points per second: <span id="currentPointsSpeed">0</span></p>
+                    <button id="pointsUpgradeButton" onclick="upgrades.upgrade(this)">
+                        <span id="pointsUpgradeCost">0</span> points
                     </button>
                 </div>
 
                 <div class="upgradeBlock">
                     <h1 style="color: #ec4d4d;">Gladiator</h1>
-                    <p>Attack Power x1.5</p>
-                    <p>Attack Speed x1.5</p>
-                    <p>HP x1.5</p>
-                    <p>Speed x1.5</p>
-                    <button>
-                        <span>1000</span> points
+                    <p>Attack Power: <span id="gladiatorAttackPower">0</span></p>
+                    <p>Attack Speed: <span id="gladiatorAttackSpeed">0</span></p>
+                    <p>Health: <span id="gladiatorHealth">0</span></p>
+                    <p>Speed: <span id="gladiatorSpeed">0</span></p>
+                    <button id="gladiatorUpgradeButton" onclick="upgrades.upgrade(this)">
+                        <span id="gladiatorUpgradeCost">0</span> points
                     </button>
                 </div>
 
                 <div class="upgradeBlock">
-                    <h1 style="color: #4d77ec;">Wolf</h1>
-                    <p>Attack Power x1.5</p>
-                    <p>Attack Speed x1.5</p>
-                    <p>HP x1.5</p>
-                    <p>Speed x1.5</p>
-                    <button>
-                        <span>1000</span> points
+                    <h1 style="color: #4d77ec;">Tank</h1>
+                    <p>Attack Power: <span id="tankAttackPower">0</span></p>
+                    <p>Attack Speed: <span id="tankAttackSpeed">0</span></p>
+                    <p>Health: <span id="tankHealth">0</span></p>
+                    <p>Speed: <span id="tankSpeed">0</span></p>
+                    <button id="tankUpgradeButton" onclick="upgrades.upgrade(this)">
+                        <span id="tankUpgradeCost">1000</span> points
                     </button>
                 </div>
 
                 <div class="upgradeBlock">
-                    <h1 style="color: #5aec4d;">Archer</h1>
-                    <p>Attack Power x1.5</p>
-                    <p>Attack Speed x1.5</p>
-                    <p>HP x1.5</p>
-                    <p>Speed x1.5</p>
-                    <button>
-                        <span>1000</span> points
+                    <h1 style="color: #5aec4d;">Assassin</h1>
+                    <p>Attack Power: <span id="assassinAttackPower">0</span></p>
+                    <p>Attack Speed: <span id="assassinAttackSpeed">0</span></p>
+                    <p>Health: <span id="assassinHealth">0</span></p>
+                    <p>Speed: <span id="assassinSpeed">0</span></p>
+                    <button id="assassinUpgradeButton" onclick="upgrades.upgrade(this)">
+                        <span id="assassinUpgradeCost">1000</span> points
                     </button>
                 </div>
             </div> 

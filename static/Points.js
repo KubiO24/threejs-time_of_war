@@ -1,14 +1,15 @@
 class Points {
     constructor() {
         this.value = 0;
-        this.speed = 10;
+        this.speed = 10;    
+    }
 
+    startGame = () => {
         setInterval(this.gain, 10)
     }
 
     gain = () => {
-        this.value = this.value;
-        this.value += (this.speed / 100) * upgrades.points.multiplayer;
+        this.value += this.speed / 100;
         this.update();
     }
 
@@ -21,6 +22,7 @@ class Points {
     }
 
     update = () => {
+        upgrades.checkForUpgrade();
         ui.updatePoints(Math.round(this.value));
         ui.updatePointsSpeed(this.speed.toFixed(1));
     }
