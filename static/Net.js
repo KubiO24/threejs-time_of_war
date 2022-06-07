@@ -1,12 +1,12 @@
 class Net {
     constructor() {
-        this.socket = io();      
+        this.socket = io();
         this.init();
     }
 
     init = () => {
         window.addEventListener("beforeunload", function (e) {
-            const body = JSON.stringify({username: net.username});
+            const body = JSON.stringify({ username: net.username });
             const headers = { "Content-Type": "application/json" }
             fetch("/resetUser", { method: "post", body, headers })
             e.returnValue = null;
@@ -16,29 +16,31 @@ class Net {
 
     login = (username) => {
         this.socket.emit("login", username, (response) => {
-            if(response.error) {
+            if (response.error) {
                 document.querySelector('#errorLoginMessage').innerHTML = response.message;
-                return;        
+                return;
             }
 
             this.username = username;
-            
-            if(response.message == 'waiting') {
-                ui.startWaitingForSecondPlayer();   
+
+            if (response.message == 'waiting') {
+                ui.startWaitingForSecondPlayer();
                 this.socket.on("waitingForSecondPlayer", (secondPlayer) => {
                     this.secondUsername = secondPlayer;
-                    this.startGame();
+                    this.startGame(0);
                     return;
-                });          
-            }else if(response.message == 'starting') {
-                this.startGame(); 
+                });
+            } else if (response.message == 'starting') {
+                this.secondUsername = response.secondUsername;
+                this.startGame(1);
             }
             return;
-        });   
+        });
     }
 
-    startGame = () => {
+    startGame = (playerSide) => {
         ui.startGame();
         points.startGame();
+        game.startGame(playerSide);
     }
 }
