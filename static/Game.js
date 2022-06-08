@@ -12,6 +12,12 @@ class Game {
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         document.getElementById("root").append(this.renderer.domElement);
 
+        this.labelRenderer = new THREE.CSS2DRenderer();
+        this.labelRenderer.setSize( window.innerWidth, window.innerHeight );
+        this.labelRenderer.domElement.style.position = 'absolute';
+        this.labelRenderer.domElement.style.top = '0px';
+        document.getElementById("root").append(this.labelRenderer.domElement);
+
         this.scene = new THREE.Scene();
         const loader = new THREE.TextureLoader();
         const bgTexture = loader.load('./img/sky.png');
@@ -75,7 +81,6 @@ class Game {
         } else {
             this.playerTower.position.set(-this.towerPosition, 0, 0)
         }
-
     }
 
     generateOponentTower = () => {
@@ -142,6 +147,7 @@ class Game {
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
         this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.labelRenderer.setSize(window.innerWidth, window.innerHeight);
     }
 
     render = () => {
@@ -152,5 +158,6 @@ class Game {
 
         requestAnimationFrame(this.render);
         this.renderer.render(this.scene, this.camera);
+        this.labelRenderer.render(this.scene, this.camera);
     }
 }

@@ -1,0 +1,20 @@
+.healthBar {
+    margin-top: -200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.healthBarOutside {
+    margin-top: 10px;
+    width: 50px;
+    height: 300px;
+    border: 2px solid black;
+    transform: rotate(180deg);
+}
+
+.healthBarInside {
+    width: 100%;
+    height: 100%;
+    background-color: red;
+}
