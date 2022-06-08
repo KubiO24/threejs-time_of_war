@@ -25,7 +25,6 @@ class Ui {
     startWaitingForSecondPlayer = () => {
         document.getElementById('inputs').style.display = 'none'
         document.getElementById('waitingScreen').style.display = 'flex'
-        this.playMusic();
     }
 
     startGame = () => {
