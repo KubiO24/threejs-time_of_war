@@ -1,7 +1,9 @@
 class Game {
     constructor() {
-        this.towerPosition = 200;
+        this.towerPosition = 600;
         this.cameraDistance = 400;
+        this.cameraSpeed = 5;
+        this.currentCameraSpeed = 0;
 
         window.addEventListener('resize', this.onWindowResize, false);
 
@@ -39,17 +41,6 @@ class Game {
         this.scene.add(this.ground)
 
         this.render()
-
-        document.addEventListener("keydown", (e) => {
-            if (e.code == 'ArrowLeft') {
-
-                return;
-            }
-
-            if (e.code == 'ArrowRight') {
-                return;
-            }
-        }, false);
 
         this.raycaster = new THREE.Raycaster();
         this.mouseVector = new THREE.Vector2();
@@ -120,8 +111,26 @@ class Game {
         } else {
             this.camera.position.set(this.playerTower.position.x + 4 * this.playerTower.geometry.parameters.radiusBottom, 100, this.cameraDistance)
         }
+        this.camera.lookAt(this.camera.position.x, this.scene.position.y + 70, this.scene.position.z);
 
-        this.camera.lookAt(this.camera.position.x, this.camera.position.y, this.scene.position.z);
+        document.addEventListener("keydown", (e) => {
+            if (e.code == 'ArrowLeft') {
+                if(this.playerSide) this.currentCameraSpeed = this.cameraSpeed;
+                else this.currentCameraSpeed = -this.cameraSpeed;
+            }
+
+            if (e.code == 'ArrowRight') {
+                if(this.playerSide) this.currentCameraSpeed = -this.cameraSpeed;
+                else this.currentCameraSpeed = this.cameraSpeed;
+            }
+
+        }, false);
+
+        document.addEventListener("keyup", (e) => {
+            if (e.code == 'ArrowLeft' || e.code == 'ArrowRight') {
+                this.currentCameraSpeed = 0;
+            }
+        }, false);
     }
 
     // użycie - await this.sleep(100); 100 - liczba ms
@@ -138,6 +147,8 @@ class Game {
     render = () => {
         TWEEN.update();
         this.camera.updateProjectionMatrix();
+
+        if(Math.abs(this.camera.position.x + this.currentCameraSpeed) < this.towerPosition) this.camera.position.x += this.currentCameraSpeed;
 
         requestAnimationFrame(this.render);
         this.renderer.render(this.scene, this.camera);
