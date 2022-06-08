@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
 
-    background-image:url("../img/loginBackground.jpg");
+    background-image: url("../img/loginBackground.jpg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -20,7 +20,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);;
+    background-color: rgba(0, 0, 0, 0.5);
+    ;
     font-family: 'Cinzel', serif;
 }
 
@@ -28,14 +29,13 @@
     margin-top: 220px;
     font-size: 10rem;
     font-weight: 800;
-    background-image: linear-gradient(
-        to right,
-        #d8b84f 0,
-        #eed971 50%,
-        #d8b84f 100%
-	);
-   color:transparent;
-   -webkit-background-clip: text;
+    background-image: linear-gradient(to right,
+            #d8b84f 0,
+            #eed971 50%,
+            #d8b84f 100%);
+    color: transparent;
+    text-align: center;
+    -webkit-background-clip: text;
 }
 
 #loginBox #inputs {
@@ -58,7 +58,7 @@
     border: 2px solid #8b711a;
     border-radius: 15px;
     outline: none;
-    transition: border 200ms ease-in-out;   
+    transition: border 200ms ease-in-out;
     color: white;
     text-align: center;
 }
@@ -103,7 +103,7 @@
     background: linear-gradient(45deg, #ce8b0f, #ffe97d, #ce8b0f);
     position: absolute;
     top: -4px;
-    left:-4px;
+    left: -4px;
     background-size: 400%;
     z-index: -1;
     filter: blur(8px);
@@ -116,7 +116,7 @@
 }
 
 #loginBox #inputs button:active:after {
-    background: rgba(0,0,0,0.2);
+    background: rgba(0, 0, 0, 0.2);
 }
 
 #loginBox #inputs button:hover:before {
@@ -137,9 +137,17 @@
 }
 
 @keyframes glowing {
-    0% { background-position: 0 0; }
-    50% { background-position: 400% 0; }
-    100% { background-position: 0 0; }
+    0% {
+        background-position: 0 0;
+    }
+
+    50% {
+        background-position: 400% 0;
+    }
+
+    100% {
+        background-position: 0 0;
+    }
 }
 
 #loginBox #inputs #errorLoginMessage {
@@ -157,25 +165,21 @@
 #loginBox #waitingScreen h2 {
     font-size: 2.5em;
     margin-bottom: 20px;
-    background-image: linear-gradient(
-        to right,
-        #d6a02b 0,
-        #e2cb54 50%,
-        #d6a02b 100%
-	);
-   color:transparent;
-   -webkit-background-clip: text;
+    background-image: linear-gradient(to right,
+            #d6a02b 0,
+            #e2cb54 50%,
+            #d6a02b 100%);
+    color: transparent;
+    -webkit-background-clip: text;
 }
 
 #loginBox #waitingScreen i {
     font-size: 5em;
     margin-bottom: 20px;
-    background-image: linear-gradient(
-        to right,
-        #d6a02b 0,
-        #e2cb54 50%,
-        #d6a02b 100%
-	);
-   color:transparent;
-   -webkit-background-clip: text;
+    background-image: linear-gradient(to right,
+            #d6a02b 0,
+            #e2cb54 50%,
+            #d6a02b 100%);
+    color: transparent;
+    -webkit-background-clip: text;
 }

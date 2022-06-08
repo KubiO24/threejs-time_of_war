@@ -4,7 +4,7 @@ class Ui {
     }
     login = () => {
         let username = document.querySelector('#usernameInput').value;
-        if(username == '') {
+        if (username == '') {
             document.querySelector('#emptyUsername').style.display = 'block';
             return
         }
@@ -14,7 +14,7 @@ class Ui {
     }
 
     playMusic = () => {
-        if(this.audio == undefined) {
+        if (this.audio == undefined) {
             this.audio = new Audio('./music/loginTheme.mp3');
             this.audio.loop = true;
             this.audio.play();
@@ -29,6 +29,7 @@ class Ui {
     }
 
     startGame = () => {
+        this.playMusic();
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('ui').style.display = 'block';
     }
@@ -41,10 +42,10 @@ class Ui {
         document.getElementById('pointsSpeed').innerHTML = speed;
     }
 
-    toggleUpgrades = () => {   
-        if(document.getElementById('upgradesMenu').style.transform == 'none') {
+    toggleUpgrades = () => {
+        if (document.getElementById('upgradesMenu').style.transform == 'none') {
             document.getElementById('upgradesMenu').style.transform = 'translateY(480px)'
-        }else {
+        } else {
             document.getElementById('upgradesMenu').style.transform = 'none';
         }
     }
