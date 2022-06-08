@@ -1,6 +1,7 @@
 class Ui {
     constructor() {
         this.refreshUpgrades();
+        this.musicPlaing = false
     }
     login = () => {
         let username = document.querySelector('#usernameInput').value;
@@ -25,10 +26,13 @@ class Ui {
     startWaitingForSecondPlayer = () => {
         document.getElementById('inputs').style.display = 'none'
         document.getElementById('waitingScreen').style.display = 'flex'
+        this.playMusic();
+        this.musicPlaing = true
     }
 
     startGame = () => {
-        this.playMusic();
+        if (this.musicPlaing === false)
+            this.playMusic();
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('ui').style.display = 'block';
     }
