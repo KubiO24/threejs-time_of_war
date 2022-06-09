@@ -58,6 +58,7 @@ class Upgrades {
         units[element].attackSpeed = units[element].attackSpeed * this.upgrades[element].attackSpeed;
         units[element].health = units[element].health * this.upgrades[element].health;
         units[element].speed = units[element].speed * this.upgrades[element].speed;
+        units[element].level += 1;
     }
 
 

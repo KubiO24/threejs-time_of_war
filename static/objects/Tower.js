@@ -13,7 +13,7 @@ class Tower extends THREE.Mesh {
         healthBar.className = 'towerHealthBar';
 
         this.healthBarText = document.createElement( 'p' );
-        this.healthBarText.textContent = "1000"
+        this.healthBarText.textContent = this.health
         healthBar.appendChild(this.healthBarText)
 
         const healthBarOutside = document.createElement( 'div' )
@@ -31,6 +31,7 @@ class Tower extends THREE.Mesh {
     }
 
     takeDamage = (damage) => {
+        // if(this.health <= 0) alert("You won")
         this.health -= damage;
         this.healthBarText.textContent = Math.round(this.health);
         const healthPercent = (this.health / this.defaultHealth) * 100

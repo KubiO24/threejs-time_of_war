@@ -5,6 +5,7 @@ class Unit extends THREE.Mesh {
         this.type = 'unit';
         this.collisionDistance = 10;
 
+        this.level = units[unitName].level;
         this.attackPower = units[unitName].attackPower;
         this.attackSpeed = units[unitName].attackSpeed;
         this.defaultHealth = units[unitName].health;
@@ -14,9 +15,38 @@ class Unit extends THREE.Mesh {
         this.geometry = new THREE.CylinderGeometry(20, 20, 20, 16); // radiusTop, radiusBottom, height, radialSegments
         this.material = new THREE.MeshStandardMaterial({ color: '#00ff00' });
 
+        this.healthBar = document.createElement( 'div' );
+        this.healthBar.className = 'unitHealthBar';
+
+        const levelText = document.createElement( 'p' );
+        levelText.textContent = "level " + this.level
+        levelText.className = "unitLevel"
+        this.healthBar.appendChild(levelText)
+
+        this.healthBarText = document.createElement( 'p' );
+        this.healthBarText.textContent = this.health
+        this.healthBar.appendChild(this.healthBarText)
+
+        const healthBarOutside = document.createElement( 'div' )
+        healthBarOutside.className = 'unitHealthBarOutside';
+
+        this.healthBarInside = document.createElement( 'div' )
+        this.healthBarInside.className = 'unitHealthBarInside';
+
+        healthBarOutside.appendChild(this.healthBarInside);
+        this.healthBar.appendChild(healthBarOutside)
+
+        const healthBarLabel = new THREE.CSS2DObject( this.healthBar );
+        healthBarLabel.position.set( 0, this.geometry.parameters.height/2, 0 );
+        this.add( healthBarLabel )
     }
 
     tick = () => {
+        if(Math.round(this.health) <= 0) {
+            this.parent.remove(this)
+            this.healthBar.remove();
+            return;
+        }
         if(this.parent.position.x < 0) this.moveDirection = 1;
         else this.moveDirection = -1
 
@@ -60,11 +90,18 @@ class Unit extends THREE.Mesh {
     }
 
     dealDamage = () => {
-        console.log(this.blockingUnit)
         this.blockingUnit.takeDamage(this.attackPower / 100)
         // this.health -= damage;
         // this.healthBarText.textContent = this.health;
         // const healthPercent = (this.health / this.defaultHealth) * 100
         // this.healthBarInside.style.height = healthPercent + '%';
+    }
+
+    takeDamage = (damage) => {
+        // if(this.health <= 0) alert("You won")
+        this.health -= damage;
+        this.healthBarText.textContent = Math.round(this.health);
+        const healthPercent = (this.health / this.defaultHealth) * 100
+        this.healthBarInside.style.height = healthPercent + '%';
     }
 }
