@@ -2,6 +2,7 @@ class Tower extends THREE.Mesh {
     constructor() {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
         
+        this.type = 'tower';
         this.defaultHealth = 1000;
         this.health = this.defaultHealth;
 
@@ -9,17 +10,17 @@ class Tower extends THREE.Mesh {
         this.material = new THREE.MeshStandardMaterial({ color: '#ff0000' });
 
         const healthBar = document.createElement( 'div' );
-        healthBar.className = 'healthBar';
+        healthBar.className = 'towerHealthBar';
 
         this.healthBarText = document.createElement( 'p' );
         this.healthBarText.textContent = "1000"
         healthBar.appendChild(this.healthBarText)
 
         const healthBarOutside = document.createElement( 'div' )
-        healthBarOutside.className = 'healthBarOutside';
+        healthBarOutside.className = 'towerHealthBarOutside';
 
         this.healthBarInside = document.createElement( 'div' )
-        this.healthBarInside.className = 'healthBarInside';
+        this.healthBarInside.className = 'towerHealthBarInside';
 
         healthBarOutside.appendChild(this.healthBarInside);
         healthBar.appendChild(healthBarOutside)
@@ -29,7 +30,7 @@ class Tower extends THREE.Mesh {
         this.add( healthBarLabel );
     }
 
-    dealDamage = (damage) => {
+    takeDamage = (damage) => {
         this.health -= damage;
         this.healthBarText.textContent = this.health;
         const healthPercent = (this.health / this.defaultHealth) * 100

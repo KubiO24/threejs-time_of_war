@@ -4,21 +4,21 @@ class Units {
             attackPower: 10,
             attackSpeed: 10,
             health: 10,
-            speed: 10
+            speed: 100
         }
 
         this.tank = {
             attackPower: 10,
             attackSpeed: 5,
             health: 20,
-            speed: 5
+            speed: 10
         }
 
         this.assassin = {
             attackPower: 5,
             attackSpeed: 15,
             health: 5,
-            speed: 15
+            speed: 30
         }
     }
 }

@@ -3,7 +3,7 @@ class Game {
         this.towerPosition = 600;
         this.cameraDistance = 400;
         this.cameraSpeed = 5;
-        this.currentCameraSpeed = 0;
+        this.currentCameraSpeed = 0; 
 
         window.addEventListener('resize', this.onWindowResize, false);
 
@@ -69,7 +69,15 @@ class Game {
         this.generatePlayerTower();
         this.generateOponentTower();
         this.generatePath();
+        this.generateUnitsGroups();
         this.setCamera();
+
+
+        let gladiator = new Unit('gladiator');
+        this.playerUnits.add(gladiator);
+
+        let gladiator2 = new Unit('gladiator');
+        this.oponentUnits.add(gladiator2);
     }
 
     generatePlayerTower = () => {
@@ -92,7 +100,6 @@ class Game {
     generatePath = () => {
         const distanceBetweenTowers = Math.abs(this.oponentTower.position.x) + Math.abs(this.playerTower.position.x);
         const pathLength = distanceBetweenTowers - 2 * this.playerTower.geometry.parameters.radiusBottom;
-        console.log(pathLength)
         const pathGeometry = new THREE.PlaneGeometry(pathLength, 100);
         const pathMaterial = new THREE.MeshBasicMaterial({
             // color: 0xffff00,
@@ -108,6 +115,20 @@ class Game {
         this.path.rotation.x = Math.PI / 2;
         this.path.position.y = 1;
         this.scene.add(this.path)
+    }
+
+    generateUnitsGroups = () => {
+        this.playerUnits = new THREE.Group();
+        this.playerUnits.position.set(this.playerTower.position.x, this.playerTower.position.y, this.playerTower.position.z);
+        if(this.playerUnits.position.x > 0) this.playerUnits.position.x -= this.playerTower.geometry.parameters.radiusBottom;
+        else this.playerUnits.position.x += this.playerTower.geometry.parameters.radiusBottom;
+        this.scene.add(this.playerUnits)
+
+        this.oponentUnits = new THREE.Group();
+        this.oponentUnits.position.set(this.oponentTower.position.x, this.oponentTower.position.y, this.oponentTower.position.z);
+        if(this.oponentUnits.position.x > 0) this.oponentUnits.position.x -= this.oponentTower.geometry.parameters.radiusBottom;
+        else this.oponentUnits.position.x += this.oponentTower.geometry.parameters.radiusBottom;
+        this.scene.add(this.oponentUnits)
     }
 
     setCamera = () => {
@@ -153,8 +174,20 @@ class Game {
     render = () => {
         TWEEN.update();
         this.camera.updateProjectionMatrix();
-
+        
+        // Camera movement
         if(Math.abs(this.camera.position.x + this.currentCameraSpeed) < this.towerPosition) this.camera.position.x += this.currentCameraSpeed;
+
+        // Units movement and attack
+        if(this.playerUnits != undefined && this.oponentUnits != undefined) {
+            for(const playerUnit of this.playerUnits.children) {
+                playerUnit.tick();
+            }
+
+            for(const oponentUnit of this.oponentUnits.children) {
+                oponentUnit.tick();
+            }
+        }
 
         requestAnimationFrame(this.render);
         this.renderer.render(this.scene, this.camera);
