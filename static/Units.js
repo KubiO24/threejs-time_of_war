@@ -4,7 +4,7 @@ class Units {
             attackPower: 10,
             attackSpeed: 10,
             health: 10,
-            speed: 100
+            speed: 500
         }
 
         this.tank = {

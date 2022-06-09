@@ -32,7 +32,7 @@ class Tower extends THREE.Mesh {
 
     takeDamage = (damage) => {
         this.health -= damage;
-        this.healthBarText.textContent = this.health;
+        this.healthBarText.textContent = Math.round(this.health);
         const healthPercent = (this.health / this.defaultHealth) * 100
         this.healthBarInside.style.height = healthPercent + '%';
     }

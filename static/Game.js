@@ -76,8 +76,8 @@ class Game {
         let gladiator = new Unit('gladiator');
         this.playerUnits.add(gladiator);
 
-        let gladiator2 = new Unit('gladiator');
-        this.oponentUnits.add(gladiator2);
+        // let gladiator2 = new Unit('gladiator');
+        // this.oponentUnits.add(gladiator2);
     }
 
     generatePlayerTower = () => {

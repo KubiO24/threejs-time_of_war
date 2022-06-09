@@ -32,6 +32,7 @@ class Unit extends THREE.Mesh {
 
     checkForCollision = (position) => {
         let stop = false;
+        let blockingUnit = undefined;
         
         const collisionDistance = this.collisionDistance;
         const moveDirection = this.moveDirection;
@@ -48,16 +49,19 @@ class Unit extends THREE.Mesh {
                 if(moveDirection > 0 && distance >= 0 || distance <= -collisionDistance) return;
                 if(moveDirection < 0 && distance <= 0 || distance >= collisionDistance) return;
 
+                blockingUnit = node;
                 stop = true;
             }
         } );
 
+        if(blockingUnit != undefined) this.blockingUnit = blockingUnit;
         if(stop) return true
         return false;
     }
 
     dealDamage = () => {
-        // console.log("DEAL DAMAGE")
+        console.log(this.blockingUnit)
+        this.blockingUnit.takeDamage(this.attackPower / 100)
         // this.health -= damage;
         // this.healthBarText.textContent = this.health;
         // const healthPercent = (this.health / this.defaultHealth) * 100
