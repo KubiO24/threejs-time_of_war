@@ -171,6 +171,7 @@
             #d6a02b 100%);
     color: transparent;
     -webkit-background-clip: text;
+    text-align: center;
 }
 
 #loginBox #waitingScreen i {

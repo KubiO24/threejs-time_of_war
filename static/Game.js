@@ -3,7 +3,9 @@ class Game {
         this.towerPosition = 600;
         this.cameraDistance = 400;
         this.cameraSpeed = 5;
-        this.currentCameraSpeed = 0; 
+        this.currentCameraSpeed = 0;
+
+        this.clock = new THREE.Clock();
 
         window.addEventListener('resize', this.onWindowResize, false);
 
@@ -13,7 +15,7 @@ class Game {
         document.getElementById("root").append(this.renderer.domElement);
 
         this.labelRenderer = new THREE.CSS2DRenderer();
-        this.labelRenderer.setSize( window.innerWidth, window.innerHeight );
+        this.labelRenderer.setSize(window.innerWidth, window.innerHeight);
         this.labelRenderer.domElement.style.position = 'absolute';
         this.labelRenderer.domElement.style.top = '0px';
         document.getElementById("root").append(this.labelRenderer.domElement);
@@ -115,13 +117,13 @@ class Game {
     generateUnitsGroups = () => {
         this.playerUnits = new THREE.Group();
         this.playerUnits.position.set(this.playerTower.position.x, this.playerTower.position.y, this.playerTower.position.z);
-        if(this.playerUnits.position.x > 0) this.playerUnits.position.x -= this.playerTower.geometry.parameters.radiusBottom;
+        if (this.playerUnits.position.x > 0) this.playerUnits.position.x -= this.playerTower.geometry.parameters.radiusBottom;
         else this.playerUnits.position.x += this.playerTower.geometry.parameters.radiusBottom;
         this.scene.add(this.playerUnits)
 
         this.oponentUnits = new THREE.Group();
         this.oponentUnits.position.set(this.oponentTower.position.x, this.oponentTower.position.y, this.oponentTower.position.z);
-        if(this.oponentUnits.position.x > 0) this.oponentUnits.position.x -= this.oponentTower.geometry.parameters.radiusBottom;
+        if (this.oponentUnits.position.x > 0) this.oponentUnits.position.x -= this.oponentTower.geometry.parameters.radiusBottom;
         else this.oponentUnits.position.x += this.oponentTower.geometry.parameters.radiusBottom;
         this.scene.add(this.oponentUnits)
     }
@@ -136,12 +138,12 @@ class Game {
 
         document.addEventListener("keydown", (e) => {
             if (e.code == 'ArrowLeft') {
-                if(this.playerSide) this.currentCameraSpeed = this.cameraSpeed;
+                if (this.playerSide) this.currentCameraSpeed = this.cameraSpeed;
                 else this.currentCameraSpeed = -this.cameraSpeed;
             }
 
             if (e.code == 'ArrowRight') {
-                if(this.playerSide) this.currentCameraSpeed = -this.cameraSpeed;
+                if (this.playerSide) this.currentCameraSpeed = -this.cameraSpeed;
                 else this.currentCameraSpeed = this.cameraSpeed;
             }
 
@@ -154,13 +156,13 @@ class Game {
         }, false);
     }
 
-    spawnPlayerUnit = (unit) => { 
-        this.playerUnits.add(new Unit(unit));   
-        
+    spawnPlayerUnit = (unit) => {
+        this.playerUnits.add(new Unit(unit, this.playerTower.position.x));
+
         // unit spawning delay
         const buttonsDiv = document.querySelector("#units");
         const buttons = buttonsDiv.querySelectorAll("button");
-        for(const button of buttons) {
+        for (const button of buttons) {
             button.disabled = true;
             setTimeout(() => button.disabled = false, 1000)
         }
@@ -181,18 +183,22 @@ class Game {
     render = () => {
         TWEEN.update();
         this.camera.updateProjectionMatrix();
-        
+
+        let delta = this.clock.getDelta();
+
         // Camera movement
-        if(Math.abs(this.camera.position.x + this.currentCameraSpeed) < this.towerPosition) this.camera.position.x += this.currentCameraSpeed;
+        if (Math.abs(this.camera.position.x + this.currentCameraSpeed) < this.towerPosition) this.camera.position.x += this.currentCameraSpeed;
 
         // Units movement and attack
-        if(this.playerUnits != undefined && this.oponentUnits != undefined) {
-            for(const playerUnit of this.playerUnits.children) {
+        if (this.playerUnits != undefined && this.oponentUnits != undefined) {
+            for (const playerUnit of this.playerUnits.children) {
                 playerUnit.tick();
+                playerUnit.mixer.update(delta);
             }
 
-            for(const oponentUnit of this.oponentUnits.children) {
+            for (const oponentUnit of this.oponentUnits.children) {
                 oponentUnit.tick();
+                oponentUnit.mixer.update(delta);
             }
         }
 
