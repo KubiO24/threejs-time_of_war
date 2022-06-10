@@ -3,7 +3,7 @@ class Unit extends THREE.Mesh {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
 
         this.type = 'unit';
-        this.collisionDistance = 23;
+        this.collisionDistance = 25;
         this.unitRotated = false;
 
         this.level = units[unitName].level;
@@ -15,8 +15,9 @@ class Unit extends THREE.Mesh {
         this.model = units[unitName].model
         this.animationsFolder = []
         let unitHeight = unitName === "tank" ? 150 : 100
-        this.geometry = new THREE.CylinderGeometry(20, 20, unitHeight, 16); // radiusTop, radiusBottom, height, radialSegments
-        this.material = new THREE.MeshStandardMaterial({ color: '#00ff00', transparent: true, opacity: 0 });
+        const unitRadius = unitName === "tank" ? 35 : 20
+        this.geometry = new THREE.CylinderGeometry(unitRadius, unitRadius, unitHeight, 16); // radiusTop, radiusBottom, height, radialSegments
+        this.material = new THREE.MeshStandardMaterial({ color: '#00ff00', transparent: true, opacity: 0.5 });
 
         this.healthBar = document.createElement('div');
         this.healthBar.className = 'unitHealthBar';

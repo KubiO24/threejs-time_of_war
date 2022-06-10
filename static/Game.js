@@ -168,11 +168,6 @@ class Game {
         }
     }
 
-    // użycie - await this.sleep(100); 100 - liczba ms
-    sleep = (ms) => {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
     onWindowResize = () => {
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
