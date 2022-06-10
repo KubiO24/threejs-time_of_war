@@ -4,7 +4,6 @@ class Unit extends THREE.Mesh {
 
         this.type = 'unit';
         this.collisionDistance = 25;
-        this.unitRotated = false;
 
         this.level = units[unitName].level;
         this.attackPower = units[unitName].attackPower;
@@ -59,6 +58,9 @@ class Unit extends THREE.Mesh {
         this.model.position.y = 2
         this.activeAction = this.animationsFolder[1]
         this.add(this.model)
+
+        this.unitRotated = false;
+        this.moveAllowed = true;
     }
 
     tick = () => {
@@ -82,11 +84,6 @@ class Unit extends THREE.Mesh {
             else this.rotation.y = Math.PI / 2 + Math.PI
             this.unitRotated = true;
         }
-    }
-
-    move = () => {
-        this.position.x += (this.speed / 100) * this.moveDirection
-        if (this.activeAction !== this.animationsFolder[1]) this.playWalk()
     }
 
     checkForCollision = (position) => {
@@ -125,9 +122,19 @@ class Unit extends THREE.Mesh {
         return "move";
     }
 
+    move = () => {
+        if(!this.moveAllowed) return;
+        this.position.x += (this.speed / 100) * this.moveDirection
+        if (this.activeAction !== this.animationsFolder[1]) this.playWalk()
+    }
+
     dealDamage = () => {
         if (this.blockingUnit.parent == this.parent) {
-            if (this.activeAction !== this.animationsFolder[0]) this.playStand()
+            if (this.activeAction !== this.animationsFolder[0]) {
+                this.playStand();
+                this.moveAllowed = false;
+                setTimeout(() => this.moveAllowed = true, 500)
+            }
             return;
         }
         if (this.activeAction !== this.animationsFolder[2]) this.playAttack()
