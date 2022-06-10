@@ -12,7 +12,7 @@ class Units {
             attackPower: 10,
             attackSpeed: 5,
             health: 20,
-            speed: 10,
+            speed: 100,
             level: 1
         }
 

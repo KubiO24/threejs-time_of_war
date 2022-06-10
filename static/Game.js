@@ -72,12 +72,7 @@ class Game {
         this.generateUnitsGroups();
         this.setCamera();
 
-
-        let gladiator = new Unit('gladiator');
-        this.playerUnits.add(gladiator);
-
-        let gladiator2 = new Unit('gladiator');
-        this.oponentUnits.add(gladiator2);
+        // this.oponentUnits.add(new Unit('gladiator'));
     }
 
     generatePlayerTower = () => {
@@ -159,6 +154,18 @@ class Game {
         }, false);
     }
 
+    spawnPlayerUnit = (unit) => { 
+        this.playerUnits.add(new Unit(unit));   
+        
+        // unit spawning delay
+        const buttonsDiv = document.querySelector("#units");
+        const buttons = buttonsDiv.querySelectorAll("button");
+        for(const button of buttons) {
+            button.disabled = true;
+            setTimeout(() => button.disabled = false, 1000)
+        }
+    }
+
     // użycie - await this.sleep(100); 100 - liczba ms
     sleep = (ms) => {
         return new Promise(resolve => setTimeout(resolve, ms));
@@ -188,6 +195,7 @@ class Game {
                 oponentUnit.tick();
             }
         }
+
 
         requestAnimationFrame(this.render);
         this.renderer.render(this.scene, this.camera);

@@ -3,7 +3,7 @@ class Unit extends THREE.Mesh {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
 
         this.type = 'unit';
-        this.collisionDistance = 10;
+        this.collisionDistance = 23;
 
         this.level = units[unitName].level;
         this.attackPower = units[unitName].attackPower;
@@ -24,7 +24,7 @@ class Unit extends THREE.Mesh {
         this.healthBar.appendChild(levelText)
 
         this.healthBarText = document.createElement( 'p' );
-        this.healthBarText.textContent = this.health
+        this.healthBarText.textContent = Math.round(this.health);
         this.healthBar.appendChild(this.healthBarText)
 
         const healthBarOutside = document.createElement( 'div' )
@@ -52,11 +52,13 @@ class Unit extends THREE.Mesh {
 
         const worldPosition = new THREE.Vector3();
         this.getWorldPosition(worldPosition)
-        if(this.checkForCollision(worldPosition)) this.dealDamage();
-        else this.move();
+
+        const action = this.checkForCollision(worldPosition);
+        if(action == "damage") this.dealDamage();
+        else if(action == "move") this.move();
     }
 
-    move = () => {  
+    move = () => {     
         this.position.x += (this.speed / 100) * this.moveDirection
     }
 
@@ -67,6 +69,7 @@ class Unit extends THREE.Mesh {
         const collisionDistance = this.collisionDistance;
         const moveDirection = this.moveDirection;
         const unitRadius = this.geometry.parameters.radiusBottom * moveDirection;
+        const thisUnit = this;
 
         game.scene.traverse( function( node ) {
             if ( node.type == 'tower' || node.type == 'unit' ) {
@@ -76,8 +79,14 @@ class Unit extends THREE.Mesh {
                 let nodeRadius = node.geometry.parameters.radiusBottom * moveDirection;
                 const distance = (position.x + unitRadius) - (nodePosition.x - nodeRadius);
 
+                if(thisUnit != node && thisUnit.parent == node.parent && Math.abs(distance) < thisUnit.geometry.parameters.radiusBottom + node.geometry.parameters.radiusBottom) {
+                    blockingUnit = node;
+                    stop = true;
+                    return;
+                }
+
                 if(moveDirection > 0 && distance >= 0 || distance <= -collisionDistance) return;
-                if(moveDirection < 0 && distance <= 0 || distance >= collisionDistance) return;
+                if(moveDirection < 0 && Math.abs(distance) <= 0 || distance >= collisionDistance) return;
 
                 blockingUnit = node;
                 stop = true;
@@ -85,11 +94,12 @@ class Unit extends THREE.Mesh {
         } );
 
         if(blockingUnit != undefined) this.blockingUnit = blockingUnit;
-        if(stop) return true
-        return false;
+        if(stop) return "damage"
+        return "move";
     }
 
     dealDamage = () => {
+        if(this.blockingUnit.parent == this.parent) return;
         this.blockingUnit.takeDamage(this.attackPower / 100)
         // this.health -= damage;
         // this.healthBarText.textContent = this.health;

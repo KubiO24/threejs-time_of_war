@@ -64,6 +64,20 @@
             <div>+<span id="pointsSpeed">0</span>/s</div>
         </div>
 
+        <div id="units">
+            <button onClick="game.spawnPlayerUnit('gladiator')">
+                <img src="./img/sword.png" alt="sword">
+            </button>
+
+            <button onClick="game.spawnPlayerUnit('tank')">
+                <img src="./img/shield.png" alt="shield">
+            </button>
+
+            <button onClick="game.spawnPlayerUnit('assassin')">
+                <img style="width: 60px; height: 60px;" src="./img/shoe.png" alt="winged shoe">
+            </button>
+        </div>
+
         <div id="upgradesMenu">
             <span id="upgradesToggle" onClick="ui.toggleUpgrades()">Upgrades</span>
             <hr>
