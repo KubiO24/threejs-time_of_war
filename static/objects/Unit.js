@@ -1,9 +1,10 @@
 class Unit extends THREE.Mesh {
-    constructor(unitName, towerPos) {
+    constructor(unitName) {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
 
         this.type = 'unit';
         this.collisionDistance = 23;
+        this.unitRotated = false;
 
         this.level = units[unitName].level;
         this.attackPower = units[unitName].attackPower;
@@ -51,9 +52,7 @@ class Unit extends THREE.Mesh {
             this.animationsFolder.push(this.mixer.clipAction(this.model.animations[1]))
             this.animationsFolder.push(this.mixer.clipAction(this.model.animations[0]))
             this.animationsFolder.push(this.mixer.clipAction(this.model.animations[2]))
-        }
-        if (towerPos < 0) this.rotation.y = Math.PI / 2
-        else this.rotation.y = Math.PI / 2 + Math.PI
+        }     
 
         this.animationsFolder[1].play()
         this.model.position.y = 2
@@ -76,6 +75,12 @@ class Unit extends THREE.Mesh {
         const action = this.checkForCollision(worldPosition);
         if (action == "damage") this.dealDamage();
         else if (action == "move") this.move();
+
+        if(!this.unitRotated) {
+            if (worldPosition.x < 0) this.rotation.y = Math.PI / 2
+            else this.rotation.y = Math.PI / 2 + Math.PI
+            this.unitRotated = true;
+        }
     }
 
     move = () => {
@@ -115,27 +120,20 @@ class Unit extends THREE.Mesh {
         });
 
         if (blockingUnit != undefined) this.blockingUnit = blockingUnit;
-        if (stop) {
-            return "damage"
-        }
+        if (stop) return "damage"
         return "move";
     }
 
     dealDamage = () => {
-        if (this.activeAction !== this.animationsFolder[2]) this.playAttack()
         if (this.blockingUnit.parent == this.parent) {
             if (this.activeAction !== this.animationsFolder[0]) this.playStand()
             return;
         }
+        if (this.activeAction !== this.animationsFolder[2]) this.playAttack()
         this.blockingUnit.takeDamage(this.attackPower / 100)
-        // this.health -= damage;
-        // this.healthBarText.textContent = this.health;
-        // const healthPercent = (this.health / this.defaultHealth) * 100
-        // this.healthBarInside.style.height = healthPercent + '%';
     }
 
     takeDamage = (damage) => {
-        // if(this.health <= 0) alert("You won")
         this.health -= damage;
         this.healthBarText.textContent = Math.round(this.health);
         const healthPercent = (this.health / this.defaultHealth) * 100
@@ -146,21 +144,18 @@ class Unit extends THREE.Mesh {
         let lastAction = this.activeAction
         this.activeAction = this.animationsFolder[0]
         lastAction.stop()
-        this.activeAction.fadeIn(1)
         this.activeAction.play()
     }
     playWalk() {
         let lastAction = this.activeAction
         this.activeAction = this.animationsFolder[1]
         lastAction.stop()
-        this.activeAction.fadeIn(1)
         this.activeAction.play()
     }
     playAttack() {
         let lastAction = this.activeAction
         this.activeAction = this.animationsFolder[2]
         lastAction.stop()
-        this.activeAction.fadeIn(1)
         this.activeAction.play()
     }
 

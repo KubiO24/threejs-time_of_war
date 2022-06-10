@@ -157,7 +157,7 @@ class Game {
     }
 
     spawnPlayerUnit = (unit) => {
-        this.playerUnits.add(new Unit(unit, this.playerTower.position.x));
+        this.playerUnits.add(new Unit(unit));
 
         // unit spawning delay
         const buttonsDiv = document.querySelector("#units");
