@@ -122,7 +122,7 @@ class Unit extends THREE.Mesh {
                     return;
                 }
 
-                if (moveDirection > 0 && distance >= 0 || distance <= -collisionDistance) return;
+                if (moveDirection > 0 && Math.abs(distance) <= 0 || distance <= -collisionDistance) return;
                 if (moveDirection < 0 && Math.abs(distance) <= 0 || distance >= collisionDistance) return;
 
                 blockingUnit = node;
