@@ -18,6 +18,10 @@ app.post('/resetUser', function (req, res) {
     userList = userList.filter(item => item != req.body.username)
 })
 
+app.post('/resetUsers', function (req, res) {
+    userList = [];
+})
+
 const server = app.listen(PORT, function () {
     console.log("http://localhost:" + PORT);
 });

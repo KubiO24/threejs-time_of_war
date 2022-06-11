@@ -1,6 +1,7 @@
 class Ui {
     constructor() {
         this.refreshUpgrades();
+        document.getElementById("unitSpawnCost").innerHTML = units.unitSpawnCost;
     }
     login = () => {
         let username = document.querySelector('#usernameInput').value;

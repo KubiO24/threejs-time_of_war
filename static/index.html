@@ -70,17 +70,24 @@
         </div>
 
         <div id="units">
-            <button onClick="game.spawnPlayerUnit('gladiator')">
-                <img src="./img/sword.png" alt="sword">
-            </button>
+            <div style="margin-top: 5px;">
+                <img id="unitSpawnCostCoin" src="./img/coin.png" alt="coin">
+                <span id="unitSpawnCost"></span>
+            </div>
 
-            <button onClick="game.spawnPlayerUnit('tank')">
-                <img src="./img/shield.png" alt="shield">
-            </button>
-
-            <button onClick="game.spawnPlayerUnit('assassin')">
-                <img style="width: 60px; height: 60px;" src="./img/shoe.png" alt="winged shoe">
-            </button>
+            <div>
+                <button onClick="game.spawnPlayerUnit('gladiator')">
+                    <img src="./img/sword.png" alt="sword">
+                </button>
+    
+                <button onClick="game.spawnPlayerUnit('tank')">
+                    <img src="./img/shield.png" alt="shield">
+                </button>
+    
+                <button onClick="game.spawnPlayerUnit('assassin')">
+                    <img style="width: 60px; height: 60px;" src="./img/shoe.png" alt="winged shoe">
+                </button>
+            </div>     
         </div>
 
         <div id="upgradesMenu">
@@ -131,7 +138,7 @@
         </div>
 
         <div id="gameEnded">
-
+            <img id="gameEndedImage" src="" alt="Game ended screen">
         </div>
     </div>
 </body>

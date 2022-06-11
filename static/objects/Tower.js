@@ -33,11 +33,13 @@ class Tower extends THREE.Mesh {
 
     takeDamage = (damage) => {
         if(this.health <= 0) {
-            if(this.side == 'player') alert("You lost")
-            else alert("You won")
+            this.health = 0;
+            if(this.side == 'player') document.getElementById('gameEndedImage').src = './img/defeat.png';
+            else document.getElementById('gameEndedImage').src = './img/victory.png';
 
             game.gameEnded = true;
             document.querySelector("#gameEnded").style.display = 'flex';
+            fetch("/resetUsers", { method: "post" })
         }
         this.health -= damage;
         this.healthBarText.textContent = Math.round(this.health);

@@ -1,5 +1,7 @@
 class Units {
     constructor() {
+        this.unitSpawnCost = 100;
+
         this.gladiator = {
             attackPower: 10,
             attackSpeed: 10,
@@ -7,7 +9,7 @@ class Units {
             speed: 200,
             level: 1,
             animationsFolder: [],
-            model: null
+            model: null,
         }
 
         this.tank = {

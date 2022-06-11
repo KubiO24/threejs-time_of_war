@@ -2,6 +2,7 @@ class Points {
     constructor() {
         this.value = 0;
         this.speed = 10;    
+        this.unitsButtonsDisabled = false;
     }
 
     startGame = () => {
@@ -10,17 +11,16 @@ class Points {
 
     gain = () => {
         if(game.gameEnded) return;
-        
+
         this.value += this.speed / 100;
         this.update();
-    }
 
-    add = (value) => {
-        this.value += value;
-    }
-
-    spend = (value) => {
-        this.value -= value;
+        const buttonsDiv = document.querySelector("#units");
+        const buttons = buttonsDiv.querySelectorAll("button");
+        for (const button of buttons) {
+            if(this.value >= units.unitSpawnCost && !this.unitsButtonsDisabled) button.disabled = false;
+            else button.disabled = true;
+        }
     }
 
     update = () => {

@@ -157,7 +157,9 @@ class Game {
 
     spawnPlayerUnit = (unit) => {
         if(this.gameEnded) return;
-        
+
+        points.value -= units.unitSpawnCost;
+
         this.playerUnits.add(new Unit(unit));
         net.unitSpawned(unit, {...units[unit]})
 
@@ -165,8 +167,8 @@ class Game {
         const buttonsDiv = document.querySelector("#units");
         const buttons = buttonsDiv.querySelectorAll("button");
         for (const button of buttons) {
-            button.disabled = true;
-            setTimeout(() => button.disabled = false, 1000)
+            points.unitsButtonsDisabled = true;
+            setTimeout(() => points.unitsButtonsDisabled = false, 1000)
         }
     }
 
