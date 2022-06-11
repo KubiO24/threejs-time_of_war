@@ -81,5 +81,31 @@ class Units {
                 console.log(error)
             }
         )
+        this.loader = new THREE.FBXLoader()
+        this.loader.load('models/Assassyn.fbx', (object) => {
+            console.log("loaded assassyn")
+
+            this.assassin.model = object;
+
+            this.assassin.model.scale.set(0.3, 0.3, 0.3);
+
+            this.assassin.model.traverse(function (child) {
+                if (child.isMesh) {
+                    child.material.needsUpdate = false;
+                    child.castShadow = false;
+                    child.receiveShadow = false;
+                    child.castShadow = false;
+                    child.wireframe = false;
+                }
+            });
+
+        },
+            (xhr) => {
+                console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+            },
+            (error) => {
+                console.log(error)
+            }
+        )
     }
 }

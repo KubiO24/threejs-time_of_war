@@ -1,9 +1,9 @@
 class Unit extends THREE.Mesh {
-    constructor(unitName) {
+    constructor(unitName, towerPos) {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
 
         this.type = 'unit';
-        this.collisionDistance = 25;
+        this.collisionDistance = 23;
 
         this.level = units[unitName].level;
         this.attackPower = units[unitName].attackPower;
@@ -14,9 +14,8 @@ class Unit extends THREE.Mesh {
         this.model = units[unitName].model
         this.animationsFolder = []
         let unitHeight = unitName === "tank" ? 150 : 100
-        const unitRadius = unitName === "tank" ? 35 : 20
-        this.geometry = new THREE.CylinderGeometry(unitRadius, unitRadius, unitHeight, 16); // radiusTop, radiusBottom, height, radialSegments
-        this.material = new THREE.MeshStandardMaterial({ color: '#00ff00', transparent: true, opacity: 0.5 });
+        this.geometry = new THREE.CylinderGeometry(20, 20, unitHeight, 16); // radiusTop, radiusBottom, height, radialSegments
+        this.material = new THREE.MeshStandardMaterial({ color: '#00ff00', transparent: true, opacity: 0 });
 
         this.healthBar = document.createElement('div');
         this.healthBar.className = 'unitHealthBar';
@@ -52,15 +51,18 @@ class Unit extends THREE.Mesh {
             this.animationsFolder.push(this.mixer.clipAction(this.model.animations[1]))
             this.animationsFolder.push(this.mixer.clipAction(this.model.animations[0]))
             this.animationsFolder.push(this.mixer.clipAction(this.model.animations[2]))
-        }     
+        } else if (unitName === "assassin") {
+            this.animationsFolder.push(this.mixer.clipAction(this.model.animations[1]))
+            this.animationsFolder.push(this.mixer.clipAction(this.model.animations[0]))
+            this.animationsFolder.push(this.mixer.clipAction(this.model.animations[2]))
+        }
+        if (towerPos < 0) this.rotation.y = Math.PI / 2
+        else this.rotation.y = Math.PI / 2 + Math.PI
 
         this.animationsFolder[1].play()
         this.model.position.y = 2
         this.activeAction = this.animationsFolder[1]
         this.add(this.model)
-
-        this.unitRotated = false;
-        this.moveAllowed = true;
     }
 
     tick = () => {
@@ -78,12 +80,11 @@ class Unit extends THREE.Mesh {
         const action = this.checkForCollision(worldPosition);
         if (action == "damage") this.dealDamage();
         else if (action == "move") this.move();
+    }
 
-        if(!this.unitRotated) {
-            if (worldPosition.x < 0) this.rotation.y = Math.PI / 2
-            else this.rotation.y = Math.PI / 2 + Math.PI
-            this.unitRotated = true;
-        }
+    move = () => {
+        this.position.x += (this.speed / 100) * this.moveDirection
+        if (this.activeAction !== this.animationsFolder[1]) this.playWalk()
     }
 
     checkForCollision = (position) => {
@@ -118,30 +119,27 @@ class Unit extends THREE.Mesh {
         });
 
         if (blockingUnit != undefined) this.blockingUnit = blockingUnit;
-        if (stop) return "damage"
+        if (stop) {
+            return "damage"
+        }
         return "move";
     }
 
-    move = () => {
-        if(!this.moveAllowed) return;
-        this.position.x += (this.speed / 100) * this.moveDirection
-        if (this.activeAction !== this.animationsFolder[1]) this.playWalk()
-    }
-
     dealDamage = () => {
+        if (this.activeAction !== this.animationsFolder[2]) this.playAttack()
         if (this.blockingUnit.parent == this.parent) {
-            if (this.activeAction !== this.animationsFolder[0]) {
-                this.playStand();
-                this.moveAllowed = false;
-                setTimeout(() => this.moveAllowed = true, 500)
-            }
+            if (this.activeAction !== this.animationsFolder[0]) this.playStand()
             return;
         }
-        if (this.activeAction !== this.animationsFolder[2]) this.playAttack()
         this.blockingUnit.takeDamage(this.attackPower / 100)
+        // this.health -= damage;
+        // this.healthBarText.textContent = this.health;
+        // const healthPercent = (this.health / this.defaultHealth) * 100
+        // this.healthBarInside.style.height = healthPercent + '%';
     }
 
     takeDamage = (damage) => {
+        // if(this.health <= 0) alert("You won")
         this.health -= damage;
         this.healthBarText.textContent = Math.round(this.health);
         const healthPercent = (this.health / this.defaultHealth) * 100
@@ -152,68 +150,27 @@ class Unit extends THREE.Mesh {
         let lastAction = this.activeAction
         this.activeAction = this.animationsFolder[0]
         lastAction.stop()
+        this.activeAction.fadeIn(1)
         this.activeAction.play()
     }
     playWalk() {
         let lastAction = this.activeAction
         this.activeAction = this.animationsFolder[1]
         lastAction.stop()
+        this.activeAction.fadeIn(1)
         this.activeAction.play()
     }
     playAttack() {
         let lastAction = this.activeAction
         this.activeAction = this.animationsFolder[2]
         lastAction.stop()
+        this.activeAction.fadeIn(1)
         this.activeAction.play()
     }
 
-    cloneFBX = (fbx) => {
-        const clone = fbx.clone(true)
-        clone.animations = fbx.animations
-        clone.skeleton = { bones: [] }
-
-        const skinnedMeshes = {}
-
-        fbx.traverse(node => {
-            if (node.isSkinnedMesh) {
-                skinnedMeshes[node.name] = node
-            }
-        })
-
-        const cloneBones = {}
-        const cloneSkinnedMeshes = {}
-
-        clone.traverse(node => {
-            if (node.isBone) {
-                cloneBones[node.name] = node
-            }
-
-            if (node.isSkinnedMesh) {
-                cloneSkinnedMeshes[node.name] = node
-            }
-        })
-
-        for (let name in skinnedMeshes) {
-            const skinnedMesh = skinnedMeshes[name]
-            const skeleton = skinnedMesh.skeleton
-            const cloneSkinnedMesh = cloneSkinnedMeshes[name]
-
-            const orderedCloneBones = []
-
-            for (let i = 0; i < skeleton.bones.length; i++) {
-                const cloneBone = cloneBones[skeleton.bones[i].name]
-                orderedCloneBones.push(cloneBone)
-            }
-
-            cloneSkinnedMesh.bind(
-                new THREE.Skeleton(orderedCloneBones, skeleton.boneInverses),
-                cloneSkinnedMesh.matrixWorld)
-
-            // For animation to work correctly:
-            clone.skeleton.bones.push(cloneSkinnedMesh)
-            clone.skeleton.bones.push(...orderedCloneBones)
-        }
-
-        return clone
+    cloneFbx(fbx) {
+        const fbxClone = clone(fbx);
+        fbxClone.animations = fbx.animations;
+        return fbxClone;
     }
 }
