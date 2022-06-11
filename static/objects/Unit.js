@@ -25,7 +25,7 @@ class Unit extends THREE.Mesh {
         const unitHeight = unitName === "tank" ? 160 : 100
         const unitRadius = unitName === "tank" ? 35 : 20
         this.geometry = new THREE.CylinderGeometry(unitRadius, unitRadius, unitHeight, 16); // radiusTop, radiusBottom, height, radialSegments
-        this.material = new THREE.MeshStandardMaterial({ color: '#00ff00', transparent: true, opacity: 0.5 });
+        this.material = new THREE.MeshStandardMaterial({ color: '#00ff00', transparent: true, opacity: 0 });
 
         this.healthBar = document.createElement('div');
         this.healthBar.className = 'unitHealthBar';

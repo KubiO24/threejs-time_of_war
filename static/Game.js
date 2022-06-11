@@ -1,5 +1,6 @@
 class Game {
     constructor() {
+        this.gameEnded = false;
         this.towerPosition = 600;
         this.cameraDistance = 400;
         this.cameraSpeed = 5;
@@ -76,7 +77,7 @@ class Game {
     }
 
     generatePlayerTower = () => {
-        this.playerTower = new Tower();
+        this.playerTower = new Tower('player');
         this.scene.add(this.playerTower);
 
         if (this.playerSide) {
@@ -87,7 +88,7 @@ class Game {
     }
 
     generateOponentTower = () => {
-        this.oponentTower = new Tower();
+        this.oponentTower = new Tower('oponent');
         this.scene.add(this.oponentTower);
         this.oponentTower.position.x = -this.playerTower.position.x
     }
@@ -155,6 +156,8 @@ class Game {
     }
 
     spawnPlayerUnit = (unit) => {
+        if(this.gameEnded) return;
+        
         this.playerUnits.add(new Unit(unit));
         net.unitSpawned(unit, {...units[unit]})
 
@@ -175,6 +178,7 @@ class Game {
     }
 
     render = () => {
+        if(this.gameEnded) return;
         TWEEN.update();
         this.camera.updateProjectionMatrix();
 

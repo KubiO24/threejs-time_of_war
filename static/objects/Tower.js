@@ -1,8 +1,9 @@
 class Tower extends THREE.Mesh {
-    constructor() {
+    constructor(side) {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
         
         this.type = 'tower';
+        this.side = side;
         this.defaultHealth = 1000;
         this.health = this.defaultHealth;
 
@@ -31,7 +32,13 @@ class Tower extends THREE.Mesh {
     }
 
     takeDamage = (damage) => {
-        // if(this.health <= 0) alert("You won")
+        if(this.health <= 0) {
+            if(this.side == 'player') alert("You lost")
+            else alert("You won")
+
+            game.gameEnded = true;
+            document.querySelector("#gameEnded").style.display = 'flex';
+        }
         this.health -= damage;
         this.healthBarText.textContent = Math.round(this.health);
         const healthPercent = (this.health / this.defaultHealth) * 100

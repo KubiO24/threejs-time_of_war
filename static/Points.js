@@ -9,6 +9,8 @@ class Points {
     }
 
     gain = () => {
+        if(game.gameEnded) return;
+        
         this.value += this.speed / 100;
         this.update();
     }
