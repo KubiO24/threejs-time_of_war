@@ -46,4 +46,8 @@ io.on("connection", (socket) => {
         }
         return;
     });
+    
+    socket.on("unitSpawned", (...args) => {
+        io.emit("spawnUnit", args)
+    });
 });

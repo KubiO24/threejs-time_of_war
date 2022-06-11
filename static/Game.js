@@ -73,8 +73,6 @@ class Game {
         this.generatePath();
         this.generateUnitsGroups();
         this.setCamera();
-
-        // this.oponentUnits.add(new Unit('gladiator'));
     }
 
     generatePlayerTower = () => {
@@ -158,6 +156,7 @@ class Game {
 
     spawnPlayerUnit = (unit) => {
         this.playerUnits.add(new Unit(unit));
+        net.unitSpawned(unit, {...units[unit]})
 
         // unit spawning delay
         const buttonsDiv = document.querySelector("#units");

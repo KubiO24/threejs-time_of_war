@@ -1,16 +1,25 @@
 class Unit extends THREE.Mesh {
-    constructor(unitName) {
+    constructor(unitName, unitData) {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
-
+        
         this.type = 'unit';
         this.collisionDistance = 25;
 
-        this.level = units[unitName].level;
-        this.attackPower = units[unitName].attackPower;
-        this.attackSpeed = units[unitName].attackSpeed;
-        this.defaultHealth = units[unitName].health;
-        this.health = this.defaultHealth;
-        this.speed = units[unitName].speed;
+        if(unitData == undefined) {
+            this.attackPower = units[unitName].attackPower;
+            this.attackSpeed = units[unitName].attackSpeed;
+            this.defaultHealth = units[unitName].health;
+            this.health = this.defaultHealth;
+            this.speed = units[unitName].speed;
+            this.level = units[unitName].level;
+        }else {
+            this.attackPower = unitData.attackPower;
+            this.attackSpeed = unitData.attackSpeed;
+            this.defaultHealth = unitData.health;
+            this.health = this.defaultHealth;
+            this.speed = unitData.speed;
+            this.level = unitData.level;
+        }
         this.model = this.cloneFbx(units[unitName].model)
         this.animationsFolder = []
         const unitHeight = unitName === "tank" ? 160 : 100

@@ -2,6 +2,7 @@ class Net {
     constructor() {
         this.socket = io();
         this.init();
+        this.thisSpawned = false;
     }
 
     init = () => {
@@ -12,6 +13,10 @@ class Net {
             e.returnValue = null;
         }, false);
 
+        this.socket.on("spawnUnit", (args) => {
+            if(!this.thisSpawned) game.oponentUnits.add(new Unit(args[0], args[1]));
+            else this.thisSpawned = false;    
+        });
     }
 
     login = (username) => {
@@ -42,5 +47,12 @@ class Net {
         ui.startGame();
         points.startGame();
         game.startGame(playerSide);
+    }
+
+    unitSpawned = (unit, unitData) => {
+        delete unitData.model;
+        delete unitData.animationsFolder;
+        this.socket.emit("unitSpawned", unit, unitData);
+        this.thisSpawned = true;
     }
 }
