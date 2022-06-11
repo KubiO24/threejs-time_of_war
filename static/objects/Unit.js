@@ -11,7 +11,7 @@ class Unit extends THREE.Mesh {
         this.defaultHealth = units[unitName].health;
         this.health = this.defaultHealth;
         this.speed = units[unitName].speed;
-        this.model = units[unitName].model
+        this.model = this.cloneFbx(units[unitName].model)
         this.animationsFolder = []
         let unitHeight = unitName === "tank" ? 150 : 100
         this.geometry = new THREE.CylinderGeometry(20, 20, unitHeight, 16); // radiusTop, radiusBottom, height, radialSegments
@@ -169,7 +169,7 @@ class Unit extends THREE.Mesh {
     }
 
     cloneFbx(fbx) {
-        const fbxClone = clone(fbx);
+        const fbxClone = skeletonUtilsClone(fbx);
         fbxClone.animations = fbx.animations;
         return fbxClone;
     }
