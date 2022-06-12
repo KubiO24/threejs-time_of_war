@@ -13,7 +13,7 @@ class Tower extends THREE.Mesh {
         this.loader.load('../../models/tower.fbx', (object) => {
             this.model = object;
 
-            this.model.scale.set(0.2, 0.2, 0.2);
+            this.model.scale.set(0.1, 0.1, 0.1);
 
             this.model.traverse(function (child) {
                 if (child.isMesh) {

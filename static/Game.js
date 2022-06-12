@@ -42,8 +42,8 @@ class Game {
             map: new THREE.TextureLoader().load('./materials/grass.jpg', function (texture) {
                 texture.wrapS = THREE.RepeatWrapping;
                 texture.wrapT = THREE.RepeatWrapping;
-                texture.repeat.x = 10000 / 30;
-                texture.repeat.y = 10000 / 30;
+                texture.repeat.x = 10000 / 90;
+                texture.repeat.y = 10000 / 90;
             })
         });
         this.ground = new THREE.Mesh(groundGeometry, groundMaterial);
@@ -112,8 +112,8 @@ class Game {
             map: new THREE.TextureLoader().load('./materials/path.jfif', function (texture) {
                 texture.wrapS = THREE.RepeatWrapping;
                 texture.wrapT = THREE.RepeatWrapping;
-                texture.repeat.x = pathLength / 40;
-                texture.repeat.y = 100 / 40;
+                texture.repeat.x = pathLength / 100;
+                texture.repeat.y = 100 / 100;
             })
         });
         this.path = new THREE.Mesh(pathGeometry, pathMaterial);
