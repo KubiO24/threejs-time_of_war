@@ -8,14 +8,14 @@ class Tower extends THREE.Mesh {
         this.health = this.defaultHealth;
 
         this.geometry = new THREE.CylinderGeometry(50, 50, 200, 16); // radiusTop, radiusBottom, height, radialSegments
-        this.material = new THREE.MeshStandardMaterial({ color: '#ff0000' });
+        this.material = new THREE.MeshStandardMaterial({ color: '#ff0000', opacity: 0, transparent: true, });
         this.loader = new THREE.FBXLoader()
-        this.loader.load('models/tower.fbx', (object) => {
-            this.tank.model = object;
+        this.loader.load('../../models/tower.fbx', (object) => {
+            this.model = object;
 
-            this.tank.model.scale.set(0.5, 0.5, 0.5);
+            this.model.scale.set(0.2, 0.2, 0.2);
 
-            this.tank.model.traverse(function (child) {
+            this.model.traverse(function (child) {
                 if (child.isMesh) {
                     child.material.needsUpdate = false;
                     child.receiveShadow = false;
@@ -23,6 +23,8 @@ class Tower extends THREE.Mesh {
                     child.wireframe = false;
                 }
             });
+            console.log(this.model)
+            this.add(this.model)
         })
 
         const healthBar = document.createElement('div');
@@ -43,6 +45,7 @@ class Tower extends THREE.Mesh {
 
         const healthBarLabel = new THREE.CSS2DObject(healthBar);
         healthBarLabel.position.set(0, this.geometry.parameters.height / 2, 0);
+        this.rotation.y = Math.PI / 2
         this.add(healthBarLabel);
     }
 

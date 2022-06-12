@@ -1,6 +1,6 @@
 class Game {
     constructor() {
-        //tree = new Tree()
+
         this.gameEnded = false;
         this.towerPosition = 600;
         this.cameraDistance = 400;
@@ -39,7 +39,7 @@ class Game {
         const groundMaterial = new THREE.MeshBasicMaterial({
             // color: 0xffff00,
             side: THREE.DoubleSide,
-            map: new THREE.TextureLoader().load('./materials/ground.png', function (texture) {
+            map: new THREE.TextureLoader().load('./materials/grass.jpg', function (texture) {
                 texture.wrapS = THREE.RepeatWrapping;
                 texture.wrapT = THREE.RepeatWrapping;
                 texture.repeat.x = 10000 / 30;
@@ -48,9 +48,10 @@ class Game {
         });
         this.ground = new THREE.Mesh(groundGeometry, groundMaterial);
         this.ground.rotation.x = Math.PI / 2;
-        //console.log(typeof (tree))
-        // for (let i = 0; i < 30; i++) {
-        //     for (let j = 0; j < 100; j++) {
+        // tree = new Tree()
+        // console.log(typeof (tree))
+        // for (let i = 0; i < 3; i++) {
+        //     for (let j = 0; j < 10; j++) {
         //         tree.position.set(j * 30, 50, i * 50)
         //         this.scene.add(this.cloneFbx(tree))
         //     }
@@ -108,7 +109,7 @@ class Game {
         const pathMaterial = new THREE.MeshBasicMaterial({
             // color: 0xffff00,
             side: THREE.DoubleSide,
-            map: new THREE.TextureLoader().load('./materials/path.png', function (texture) {
+            map: new THREE.TextureLoader().load('./materials/path.jfif', function (texture) {
                 texture.wrapS = THREE.RepeatWrapping;
                 texture.wrapT = THREE.RepeatWrapping;
                 texture.repeat.x = pathLength / 40;

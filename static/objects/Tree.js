@@ -2,7 +2,8 @@ class Tree extends THREE.Mesh {
     constructor() {
         super()
         this.loader = new THREE.FBXLoader()
-        this.loader.load('models/tree.fbx', (object) => {
+        this.loader.load('../../models/tree.fbx', (object) => {
+            this.model = object
             this.add(this.model)
         },
             (xhr) => {
