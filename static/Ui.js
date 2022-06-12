@@ -30,9 +30,11 @@ class Ui {
     }
 
     startGame = () => {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('ui').style.display = 'block';
         this.playMusic();
+        document.getElementById('inputs').style.display = 'none'
+        document.getElementById('waitingScreen').style.display = 'none'
+        document.getElementById('loadingScreen').style.display = 'flex'
+        units.loadUnits()
     }
 
     updatePoints = (points) => {

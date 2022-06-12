@@ -14,8 +14,8 @@ class Net {
         }, false);
 
         this.socket.on("spawnUnit", (args) => {
-            if(!this.thisSpawned) game.oponentUnits.add(new Unit(args[0], args[1]));
-            else this.thisSpawned = false;    
+            if (!this.thisSpawned) game.oponentUnits.add(new Unit(args[0], args[1]));
+            else this.thisSpawned = false;
         });
     }
 
@@ -44,9 +44,9 @@ class Net {
     }
 
     startGame = (playerSide) => {
-        ui.startGame();
         points.startGame();
         game.startGame(playerSide);
+        ui.startGame();
     }
 
     unitSpawned = (unit, unitData) => {

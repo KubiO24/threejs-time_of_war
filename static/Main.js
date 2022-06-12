@@ -4,6 +4,7 @@ let ui;
 let points;
 let upgrades;
 let units;
+let tree
 
 window.onload = () => {
     points = new Points();

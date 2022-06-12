@@ -1,7 +1,7 @@
 class Tower extends THREE.Mesh {
     constructor(side) {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
-        
+
         this.type = 'tower';
         this.side = side;
         this.defaultHealth = 1000;
@@ -9,32 +9,47 @@ class Tower extends THREE.Mesh {
 
         this.geometry = new THREE.CylinderGeometry(50, 50, 200, 16); // radiusTop, radiusBottom, height, radialSegments
         this.material = new THREE.MeshStandardMaterial({ color: '#ff0000' });
+        this.loader = new THREE.FBXLoader()
+        this.loader.load('models/tower.fbx', (object) => {
+            this.tank.model = object;
 
-        const healthBar = document.createElement( 'div' );
+            this.tank.model.scale.set(0.5, 0.5, 0.5);
+
+            this.tank.model.traverse(function (child) {
+                if (child.isMesh) {
+                    child.material.needsUpdate = false;
+                    child.receiveShadow = false;
+                    child.castShadow = true;
+                    child.wireframe = false;
+                }
+            });
+        })
+
+        const healthBar = document.createElement('div');
         healthBar.className = 'towerHealthBar';
 
-        this.healthBarText = document.createElement( 'p' );
+        this.healthBarText = document.createElement('p');
         this.healthBarText.textContent = this.health
         healthBar.appendChild(this.healthBarText)
 
-        const healthBarOutside = document.createElement( 'div' )
+        const healthBarOutside = document.createElement('div')
         healthBarOutside.className = 'towerHealthBarOutside';
 
-        this.healthBarInside = document.createElement( 'div' )
+        this.healthBarInside = document.createElement('div')
         this.healthBarInside.className = 'towerHealthBarInside';
 
         healthBarOutside.appendChild(this.healthBarInside);
         healthBar.appendChild(healthBarOutside)
 
-        const healthBarLabel = new THREE.CSS2DObject( healthBar );
-        healthBarLabel.position.set( 0, this.geometry.parameters.height/2, 0 );
-        this.add( healthBarLabel );
+        const healthBarLabel = new THREE.CSS2DObject(healthBar);
+        healthBarLabel.position.set(0, this.geometry.parameters.height / 2, 0);
+        this.add(healthBarLabel);
     }
 
     takeDamage = (damage) => {
-        if(this.health <= 0) {
+        if (this.health <= 0) {
             this.health = 0;
-            if(this.side == 'player') document.getElementById('gameEndedImage').src = './img/defeat.png';
+            if (this.side == 'player') document.getElementById('gameEndedImage').src = './img/defeat.png';
             else document.getElementById('gameEndedImage').src = './img/victory.png';
 
             game.gameEnded = true;

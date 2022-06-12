@@ -1,18 +1,18 @@
 class Unit extends THREE.Mesh {
     constructor(unitName, unitData) {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
-        
+
         this.type = 'unit';
         this.collisionDistance = 25;
 
-        if(unitData == undefined) {
+        if (unitData == undefined) {
             this.attackPower = units[unitName].attackPower;
             this.attackSpeed = units[unitName].attackSpeed;
             this.defaultHealth = units[unitName].health;
             this.health = this.defaultHealth;
             this.speed = units[unitName].speed;
             this.level = units[unitName].level;
-        }else {
+        } else {
             this.attackPower = unitData.attackPower;
             this.attackSpeed = unitData.attackSpeed;
             this.defaultHealth = unitData.health;
@@ -92,7 +92,7 @@ class Unit extends THREE.Mesh {
         if (action == "damage") this.dealDamage();
         else if (action == "move") this.move();
 
-        if(!this.unitRotated) {
+        if (!this.unitRotated) {
             if (worldPosition.x < 0) this.rotation.y = Math.PI / 2
             else this.rotation.y = Math.PI / 2 + Math.PI
             this.unitRotated = true;
@@ -138,7 +138,7 @@ class Unit extends THREE.Mesh {
     }
 
     move = () => {
-        if(!this.moveAllowed) return;
+        if (!this.moveAllowed) return;
         this.position.x += (this.speed / 100) * this.moveDirection
         if (this.activeAction !== this.animationsFolder[1]) this.playWalk()
     }

@@ -155,14 +155,16 @@
     color: #d1a515;
 }
 
-#loginBox #waitingScreen {
+#loginBox #waitingScreen,
+#loginBox #loadingScreen {
     display: none;
     flex-direction: column;
     align-items: center;
     margin-top: 110px;
 }
 
-#loginBox #waitingScreen h2 {
+#loginBox #waitingScreen h2,
+#loginBox #loadingScreen h2 {
     font-size: 2.5em;
     margin-bottom: 20px;
     background-image: linear-gradient(to right,
@@ -174,7 +176,8 @@
     text-align: center;
 }
 
-#loginBox #waitingScreen i {
+#loginBox #waitingScreen i,
+#loginBox #loadingScreen i {
     font-size: 5em;
     margin-bottom: 20px;
     background-image: linear-gradient(to right,

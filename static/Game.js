@@ -1,5 +1,6 @@
 class Game {
     constructor() {
+        //tree = new Tree()
         this.gameEnded = false;
         this.towerPosition = 600;
         this.cameraDistance = 400;
@@ -31,7 +32,7 @@ class Game {
         const axesHelper = new THREE.AxesHelper(1000);
         this.scene.add(axesHelper);
 
-        const light = new THREE.HemisphereLight('#ffffff', '#000000', 1); // skyColor, groundColor, intensity
+        const light = new THREE.HemisphereLight('#ffffff', '#000000', 2); // skyColor, groundColor, intensity
         this.scene.add(light);
 
         const groundGeometry = new THREE.PlaneGeometry(10000, 10000);
@@ -47,6 +48,13 @@ class Game {
         });
         this.ground = new THREE.Mesh(groundGeometry, groundMaterial);
         this.ground.rotation.x = Math.PI / 2;
+        //console.log(typeof (tree))
+        // for (let i = 0; i < 30; i++) {
+        //     for (let j = 0; j < 100; j++) {
+        //         tree.position.set(j * 30, 50, i * 50)
+        //         this.scene.add(this.cloneFbx(tree))
+        //     }
+        // }
         this.scene.add(this.ground)
 
         this.render()
@@ -110,6 +118,7 @@ class Game {
         this.path = new THREE.Mesh(pathGeometry, pathMaterial);
         this.path.rotation.x = Math.PI / 2;
         this.path.position.y = 1;
+
         this.scene.add(this.path)
     }
 
@@ -156,12 +165,12 @@ class Game {
     }
 
     spawnPlayerUnit = (unit) => {
-        if(this.gameEnded) return;
+        if (this.gameEnded) return;
 
         points.value -= units.unitSpawnCost;
 
         this.playerUnits.add(new Unit(unit));
-        net.unitSpawned(unit, {...units[unit]})
+        net.unitSpawned(unit, { ...units[unit] })
 
         // unit spawning delay
         const buttonsDiv = document.querySelector("#units");
@@ -180,7 +189,7 @@ class Game {
     }
 
     render = () => {
-        if(this.gameEnded) return;
+        if (this.gameEnded) return;
         TWEEN.update();
         this.camera.updateProjectionMatrix();
 
@@ -207,4 +216,11 @@ class Game {
         this.renderer.render(this.scene, this.camera);
         this.labelRenderer.render(this.scene, this.camera);
     }
+
+    cloneFbx(fbx) {
+        const fbxClone = skeletonUtilsClone(fbx);
+        fbxClone.animations = fbx.animations;
+        return fbxClone;
+    }
+
 }

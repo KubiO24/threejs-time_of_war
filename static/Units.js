@@ -8,7 +8,6 @@ class Units {
             health: 10,
             speed: 200,
             level: 1,
-            animationsFolder: [],
             model: null,
         }
 
@@ -18,7 +17,6 @@ class Units {
             health: 20,
             speed: 100,
             level: 1,
-            animationsFolder: [],
             model: null
         }
 
@@ -28,13 +26,13 @@ class Units {
             health: 5,
             speed: 300,
             level: 1,
-            animationsFolder: [],
             model: null
         }
+    }
+
+    loadUnits = async () => {
         this.loader = new THREE.FBXLoader()
         this.loader.load('models/Gladiator.fbx', (object) => {
-            console.log("loaded gladiator")
-
             this.gladiator.model = object;
 
             this.gladiator.model.scale.set(0.3, 0.3, 0.3);
@@ -59,8 +57,6 @@ class Units {
         )
         this.loader = new THREE.FBXLoader()
         this.loader.load('models/Tank.fbx', (object) => {
-            console.log("loaded tank")
-
             this.tank.model = object;
 
             this.tank.model.scale.set(0.5, 0.5, 0.5);
@@ -83,10 +79,9 @@ class Units {
                 console.log(error)
             }
         )
+
         this.loader = new THREE.FBXLoader()
         this.loader.load('models/Assassyn.fbx', (object) => {
-            console.log("loaded assassyn")
-
             this.assassin.model = object;
 
             this.assassin.model.scale.set(0.3, 0.3, 0.3);
@@ -101,6 +96,21 @@ class Units {
                 }
             });
 
+            // let testG = new Unit("gladiator")
+            // let testT = new Unit("tank")
+            // let testA = new Unit('assassin')
+            // testG.position.set(10000, -1000, 10000)
+            // testT.position.set(10000, -1000, 10000)
+            // testA.position.set(10000, -1000, 10000)
+
+            // game.playerUnits.add(testG);
+            // game.playerUnits.add(testT);
+            // game.playerUnits.add(testA);
+
+
+            document.getElementById('loadingScreen').style.display = 'none'
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('ui').style.display = 'block';
         },
             (xhr) => {
                 console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
