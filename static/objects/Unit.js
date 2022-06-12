@@ -76,9 +76,13 @@ class Unit extends THREE.Mesh {
 
     tick = () => {
         if (Math.round(this.health) <= 0) {
-            this.parent.remove(this)
-            this.healthBar.remove();
-            return;
+            if(this.removed) return;
+            this.removed = true;
+
+            setTimeout(() => {
+                this.parent.remove(this)
+                this.healthBar.remove();
+            }, 10)   
         }
         if (this.parent.position.x < 0) this.moveDirection = 1;
         else this.moveDirection = -1
