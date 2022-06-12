@@ -102,6 +102,14 @@ body {
     cursor: pointer;
 }
 
+#ui #upgradesMenu #upgradesList button:hover:enabled {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+#ui #upgradesMenu #upgradesList button:active:enabled {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
 #ui #units {
     position: absolute;
     top: 0;

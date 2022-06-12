@@ -6,15 +6,13 @@ class Unit extends THREE.Mesh {
         this.collisionDistance = 25;
 
         if (unitData == undefined) {
-            this.attackPower = units[unitName].attackPower;
-            this.attackSpeed = units[unitName].attackSpeed;
+            this.attack = units[unitName].attack;
             this.defaultHealth = units[unitName].health;
             this.health = this.defaultHealth;
             this.speed = units[unitName].speed;
             this.level = units[unitName].level;
         } else {
-            this.attackPower = unitData.attackPower;
-            this.attackSpeed = unitData.attackSpeed;
+            this.attack = unitData.attack;
             this.defaultHealth = unitData.health;
             this.health = this.defaultHealth;
             this.speed = unitData.speed;
@@ -153,7 +151,7 @@ class Unit extends THREE.Mesh {
             return;
         }
         if (this.activeAction !== this.animationsFolder[2]) this.playAttack()
-        this.blockingUnit.takeDamage(this.attackPower / 100)
+        this.blockingUnit.takeDamage(this.attack / 100)
     }
 
     takeDamage = (damage) => {

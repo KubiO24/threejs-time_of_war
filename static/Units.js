@@ -3,8 +3,7 @@ class Units {
         this.unitSpawnCost = 100;
 
         this.gladiator = {
-            attackPower: 10,
-            attackSpeed: 10,
+            attack: 10,
             health: 10,
             speed: 200,
             level: 1,
@@ -12,8 +11,7 @@ class Units {
         }
 
         this.tank = {
-            attackPower: 10,
-            attackSpeed: 5,
+            attack: 10,
             health: 20,
             speed: 100,
             level: 1,
@@ -21,8 +19,7 @@ class Units {
         }
 
         this.assassin = {
-            attackPower: 5,
-            attackSpeed: 15,
+            attack: 5,
             health: 5,
             speed: 300,
             level: 1,
