@@ -58,7 +58,7 @@ class Tower extends THREE.Mesh {
             else ui.gameEnded(true);
         }
         this.health -= damage;
-        if(this.health < 0) this.health = 0;
+        if (this.health < 0) this.health = 0;
         this.healthBarText.textContent = Math.round(this.health);
         const healthPercent = (this.health / this.defaultHealth) * 100
         this.healthBarInside.style.height = healthPercent + '%';
