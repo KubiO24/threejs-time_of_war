@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 let userList = [];
+let gameStarted = false;
 
 app.use(express.json());
 app.use(express.static('static'))
@@ -16,10 +17,12 @@ app.get("/", function (req, res) {
 
 app.post('/resetUser', function (req, res) {
     userList = userList.filter(item => item != req.body.username)
+    if(userList.length == 0) gameStarted = false;
 })
 
 app.post('/resetUsers', function (req, res) {
     userList = [];
+    gameStarted = false;
 })
 
 const server = app.listen(PORT, function () {
@@ -30,7 +33,7 @@ const io = socket(server);
 
 io.on("connection", (socket) => {
     socket.on("login", (username, callback) => {
-        if (userList.length >= 2) {
+        if (userList.length >= 2 || gameStarted) {
             callback({ error: true, message: '2 players are already playing' });
             return;
         }
@@ -45,6 +48,7 @@ io.on("connection", (socket) => {
         if (userList.length == 2) {
             callback({ error: false, message: 'starting', secondUsername: userList[0] });
             io.emit("waitingForSecondPlayer", userList[1]);
+            gameStarted = true;
         } else {
             callback({ error: false, message: 'waiting' });
         }
