@@ -26,6 +26,7 @@ body {
     border-bottom-right-radius: 10px;
     border-color: #ecc74d;
     border-style: solid;
+    user-select: none;
 }
 
 #ui #points img {
@@ -134,6 +135,7 @@ body {
     border-bottom-right-radius: 10px;
     border-color: #ecc74d;
     border-style: solid;
+    user-select: none;
 }
 
 #ui #units div {
