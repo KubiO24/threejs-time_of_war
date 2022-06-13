@@ -53,6 +53,7 @@ body {
     transform: translateY(480px);
     transition: transform 0.25s ease-in-out;
     user-select: none;
+    z-index: 5;
 }
 
 #ui #upgradesMenu #upgradesToggle {

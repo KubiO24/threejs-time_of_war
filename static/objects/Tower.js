@@ -51,15 +51,14 @@ class Tower extends THREE.Mesh {
 
     takeDamage = (damage) => {
         if (this.health <= 0) {
-            this.health = 0;
-            if (this.side == 'player') document.getElementById('gameEndedImage').src = './img/defeat.png';
-            else document.getElementById('gameEndedImage').src = './img/victory.png';
-
             game.gameEnded = true;
-            document.querySelector("#gameEnded").style.display = 'flex';
             fetch("/resetUsers", { method: "post" })
+
+            if (this.side == 'player') ui.gameEnded(false);
+            else ui.gameEnded(true);
         }
         this.health -= damage;
+        if(this.health < 0) this.health = 0;
         this.healthBarText.textContent = Math.round(this.health);
         const healthPercent = (this.health / this.defaultHealth) * 100
         this.healthBarInside.style.height = healthPercent + '%';
