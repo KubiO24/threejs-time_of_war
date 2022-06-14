@@ -23,7 +23,6 @@ class Tower extends THREE.Mesh {
                     child.wireframe = false;
                 }
             });
-            console.log(this.model)
             this.add(this.model)
         })
 
@@ -46,7 +45,48 @@ class Tower extends THREE.Mesh {
         const healthBarLabel = new THREE.CSS2DObject(healthBar);
         healthBarLabel.position.set(0, this.geometry.parameters.height / 2, 0);
         this.rotation.y = Math.PI / 2
-        this.add(healthBarLabel);
+        this.add(healthBarLabel);    
+    }
+    
+    generateField = () => {
+        const length = 200;
+        const towerFieldGeometry = new THREE.BoxGeometry( 100, 5, length );
+        const towerFieldMaterial = new THREE.MeshBasicMaterial( {color: 0xff0000, transparent: true, opacity: 0.5} );
+
+        this.towerField = new THREE.Mesh( towerFieldGeometry, towerFieldMaterial );
+        if(this.position.x > 0) this.towerField.position.z -= ( this.geometry.parameters.radiusBottom +  0.5 * length );
+        else this.towerField.position.z += ( this.geometry.parameters.radiusBottom + 0.5 * length );
+
+        this.add( this.towerField );
+    }
+
+    towerFieldCheck = () => {
+        let unitInField;
+        const side = this.side;
+        const towerFieldlength = this.towerField.geometry.parameters.depth;
+        const towerFieldPosition = new THREE.Vector3();
+        this.towerField.getWorldPosition(towerFieldPosition)
+
+        game.scene.traverse(function (node) {
+            if (node.type != 'unit') return;
+            if (node.side == side) return
+
+            const nodePosition = new THREE.Vector3();
+            node.getWorldPosition(nodePosition)
+
+            if(towerFieldPosition.x > 0) {
+                if(nodePosition.x > (towerFieldPosition.x - 0.5 * towerFieldlength) && nodePosition.x < (towerFieldPosition.x + 0.5 * towerFieldlength)) {
+                    if(unitInField == undefined || node.position.x > unitInField.position.x) unitInField = node;
+                }
+            }else {
+                if(nodePosition.x < (towerFieldPosition.x + 0.5 * towerFieldlength) && nodePosition.x > (towerFieldPosition.x - 0.5 * towerFieldlength)) {
+                    if(unitInField == undefined || node.position.x < unitInField.position.x) unitInField = node;
+                }
+            }            
+        });
+
+        if(unitInField == undefined) return;
+        unitInField.takeDamage(0.01);
     }
 
     takeDamage = (damage) => {

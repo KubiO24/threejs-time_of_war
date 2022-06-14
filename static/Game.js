@@ -94,12 +94,14 @@ class Game {
         } else {
             this.playerTower.position.set(-this.towerPosition, 0, 0)
         }
+        this.playerTower.generateField();
     }
 
     generateOponentTower = () => {
         this.oponentTower = new Tower('oponent');
         this.scene.add(this.oponentTower);
         this.oponentTower.position.x = -this.playerTower.position.x
+        this.oponentTower.generateField();
     }
 
     generatePath = () => {
@@ -212,6 +214,11 @@ class Game {
             }
         }
 
+        // Tower field damage
+        if(this.playerTower != undefined && this.oponentTower != undefined) {
+            this.playerTower.towerFieldCheck();
+            this.oponentTower.towerFieldCheck();
+        }     
 
         requestAnimationFrame(this.render);
         this.renderer.render(this.scene, this.camera);

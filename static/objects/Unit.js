@@ -11,12 +11,14 @@ class Unit extends THREE.Mesh {
             this.health = this.defaultHealth;
             this.speed = units[unitName].speed;
             this.level = units[unitName].level;
+            this.side = "player";
         } else {
             this.attack = unitData.attack;
             this.defaultHealth = unitData.health;
             this.health = this.defaultHealth;
             this.speed = unitData.speed;
             this.level = unitData.level;
+            this.side = "oponent";
         }
         this.model = this.cloneFbx(units[unitName].model)
         this.animationsFolder = []
