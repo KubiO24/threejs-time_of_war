@@ -50,6 +50,9 @@ class Game {
         this.ground.rotation.x = Math.PI / 2;
         this.scene.add(this.ground)
 
+        this.dt = 1000 / 60;
+        this.timeTarget = 0;
+
         this.render()
     }
 
@@ -170,36 +173,76 @@ class Game {
 
     render = () => {
         if (this.gameEnded) return;
-        TWEEN.update();
-        this.camera.updateProjectionMatrix();
 
-        let delta = this.clock.getDelta();
+        if(Date.now() >= this.timeTarget){
+            TWEEN.update();
+            this.camera.updateProjectionMatrix();
 
-        // Camera movement
-        if (Math.abs(this.camera.position.x + this.currentCameraSpeed) < this.towerPosition) this.camera.position.x += this.currentCameraSpeed;
+            // Camera movement
+            if (Math.abs(this.camera.position.x + this.currentCameraSpeed) < this.towerPosition) this.camera.position.x += this.currentCameraSpeed;
 
-        // Units movement and attack
-        if (this.playerUnits != undefined && this.oponentUnits != undefined) {
-            for (const playerUnit of this.playerUnits.children) {
-                playerUnit.tick();
-                playerUnit.mixer.update(delta);
+            // Units movement and attack
+            let delta = this.clock.getDelta();
+
+            if (this.playerUnits != undefined && this.oponentUnits != undefined) {
+                for (const playerUnit of this.playerUnits.children) {
+                    playerUnit.tick();
+                    playerUnit.mixer.update(delta);
+                }
+
+                for (const oponentUnit of this.oponentUnits.children) {
+                    oponentUnit.tick();
+                    oponentUnit.mixer.update(delta);
+                }
             }
 
-            for (const oponentUnit of this.oponentUnits.children) {
-                oponentUnit.tick();
-                oponentUnit.mixer.update(delta);
+            // Tower field damage
+            if(this.playerTower != undefined && this.oponentTower != undefined) {
+                this.playerTower.towerFieldCheck();
+                this.oponentTower.towerFieldCheck();
+            } 
+
+            this.renderer.render(this.scene, this.camera);
+            this.labelRenderer.render(this.scene, this.camera);
+        
+            this.timeTarget += this.dt;
+            if(Date.now() >= this.timeTarget){
+                this.timeTarget = Date.now();
             }
-        }
+          }
+          requestAnimationFrame(this.render);
 
-        // Tower field damage
-        if(this.playerTower != undefined && this.oponentTower != undefined) {
-            this.playerTower.towerFieldCheck();
-            this.oponentTower.towerFieldCheck();
-        }     
 
-        requestAnimationFrame(this.render);    
-        this.renderer.render(this.scene, this.camera);
-        this.labelRenderer.render(this.scene, this.camera);
+        // TWEEN.update();
+        // this.camera.updateProjectionMatrix();
+
+        // let delta = this.clock.getDelta();
+
+        // // Camera movement
+        // if (Math.abs(this.camera.position.x + this.currentCameraSpeed) < this.towerPosition) this.camera.position.x += this.currentCameraSpeed;
+
+        // // Units movement and attack
+        // if (this.playerUnits != undefined && this.oponentUnits != undefined) {
+        //     for (const playerUnit of this.playerUnits.children) {
+        //         playerUnit.tick();
+        //         playerUnit.mixer.update(delta);
+        //     }
+
+        //     for (const oponentUnit of this.oponentUnits.children) {
+        //         oponentUnit.tick();
+        //         oponentUnit.mixer.update(delta);
+        //     }
+        // }
+
+        // // Tower field damage
+        // if(this.playerTower != undefined && this.oponentTower != undefined) {
+        //     this.playerTower.towerFieldCheck();
+        //     this.oponentTower.towerFieldCheck();
+        // }     
+
+        // requestAnimationFrame(this.render);    
+        // this.renderer.render(this.scene, this.camera);
+        // this.labelRenderer.render(this.scene, this.camera);
     }
 
     cloneFbx(fbx) {
