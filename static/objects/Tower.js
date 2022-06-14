@@ -10,11 +10,15 @@ class Tower extends THREE.Mesh {
         this.geometry = new THREE.CylinderGeometry(50, 50, 200, 16); // radiusTop, radiusBottom, height, radialSegments
         this.material = new THREE.MeshStandardMaterial({ color: '#ff0000', opacity: 0, transparent: true, });
         this.loader = new THREE.FBXLoader()
-        this.loader.load('../../models/tower.fbx', (object) => {
+        this.loader.load('../../models/tower2.fbx', (object) => {
             this.model = object;
 
-            this.model.scale.set(0.1, 0.1, 0.1);
+            // this.model.scale.set(0.1, 0.1, 0.1);
+            this.model.scale.set(.5, .5, .5);
 
+            if(this.position.x > 0) this.model.rotation.y = Math.PI /2 
+            else this.model.rotation.y = Math.PI /2 + Math.PI
+            
             this.model.traverse(function (child) {
                 if (child.isMesh) {
                     child.material.needsUpdate = false;
@@ -38,14 +42,16 @@ class Tower extends THREE.Mesh {
 
         this.healthBarInside = document.createElement('div')
         this.healthBarInside.className = 'towerHealthBarInside';
-
+        
         healthBarOutside.appendChild(this.healthBarInside);
         healthBar.appendChild(healthBarOutside)
-
+        
         const healthBarLabel = new THREE.CSS2DObject(healthBar);
         healthBarLabel.position.set(0, this.geometry.parameters.height / 2, 0);
         this.rotation.y = Math.PI / 2
+        
         this.add(healthBarLabel);    
+        
     }
     
     generateField = () => {
