@@ -50,7 +50,7 @@ class Game {
         this.ground.rotation.x = Math.PI / 2;
         this.scene.add(this.ground)
 
-        this.dt = 1000 / 60;
+        this.dt = 1000 / 30;
         this.timeTarget = 0;
 
         this.render()
