@@ -136,6 +136,7 @@ body {
     border-color: #ecc74d;
     border-style: solid;
     user-select: none;
+    z-index: 5;
 }
 
 #ui #units div {

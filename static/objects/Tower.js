@@ -49,7 +49,7 @@ class Tower extends THREE.Mesh {
     }
     
     generateField = () => {
-        const length = 200;
+        const length = 250;
         const towerFieldGeometry = new THREE.BoxGeometry( 100, 5, length );
         const towerFieldMaterial = new THREE.MeshBasicMaterial( {color: 0xff0000, transparent: true, opacity: 0.5} );
 
@@ -86,7 +86,10 @@ class Tower extends THREE.Mesh {
         });
 
         if(unitInField == undefined) return;
-        unitInField.takeDamage(0.01);
+
+        unitInField.takeDamage(unitInField.health / 500);
+        if(!unitInField.slowed) unitInField.speed = unitInField.speed * 0.5;    
+        unitInField.slowed = true;
     }
 
     takeDamage = (damage) => {
