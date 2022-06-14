@@ -48,14 +48,6 @@ class Game {
         });
         this.ground = new THREE.Mesh(groundGeometry, groundMaterial);
         this.ground.rotation.x = Math.PI / 2;
-        // tree = new Tree()
-        // console.log(typeof (tree))
-        // for (let i = 0; i < 3; i++) {
-        //     for (let j = 0; j < 10; j++) {
-        //         tree.position.set(j * 30, 50, i * 50)
-        //         this.scene.add(this.cloneFbx(tree))
-        //     }
-        // }
         this.scene.add(this.ground)
 
         this.render()

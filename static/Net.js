@@ -59,7 +59,6 @@ class Net {
     }
 
     assignVariables = (data) => {
-        console.log(data)
         game.towerData = data.towerData;
 
         for (const [unitName, unitData] of Object.entries(data.unitData)) {

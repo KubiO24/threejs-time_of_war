@@ -44,14 +44,7 @@ class Units {
                 }
             });
 
-        },
-            (xhr) => {
-                console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
-            },
-            (error) => {
-                console.log(error)
-            }
-        )
+        })
         this.loader = new THREE.FBXLoader()
         this.loader.load('models/Tank.fbx', (object) => {
             this.tank.model = object;
@@ -68,14 +61,7 @@ class Units {
                 }
             });
 
-        },
-            (xhr) => {
-                console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
-            },
-            (error) => {
-                console.log(error)
-            }
-        )
+        })
 
         this.loader = new THREE.FBXLoader()
         this.loader.load('models/Assassyn.fbx', (object) => {
@@ -108,13 +94,6 @@ class Units {
             document.getElementById('loadingScreen').style.display = 'none'
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('ui').style.display = 'block';
-        },
-            (xhr) => {
-                console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
-            },
-            (error) => {
-                console.log(error)
-            }
-        )
+        })
     }
 }
