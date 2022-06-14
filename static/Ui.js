@@ -96,7 +96,7 @@ class Ui {
     gameEnded = (gameWon) => {
         document.getElementById("upgradesMenu").style.display = 'none';
         document.querySelector("#gameEnded").style.display = 'flex';
-        if (gameWon) document.getElementById('gameEndedImage').src = './img/defeat.png';
-        else document.getElementById('gameEndedImage').src = './img/victory.png';
+        if (gameWon) document.getElementById('gameEndedImage').src = './img/victory.png';
+        else document.getElementById('gameEndedImage').src = './img/defeat.png';
     }
 }
