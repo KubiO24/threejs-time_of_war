@@ -1,10 +1,4 @@
-let game;
-let net;
-let ui;
-let points;
-let upgrades;
-let units;
-let tree
+let game, net, ui, points, upgrades, units;
 
 window.onload = () => {
     points = new Points();

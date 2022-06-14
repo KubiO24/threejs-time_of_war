@@ -2,36 +2,36 @@ class Upgrades {
     constructor() {
         this.upgrades = {
             points: {
-                multiplayer: 1.1,
-                cost: 10,
-                costMultiplayer: 1.05,
+                multiplayer: 0,
+                cost: 0,
+                costMultiplayer: 0,
                 buttonElement: document.getElementById('pointsUpgradeButton')
             },
 
             gladiator: {
-                attack: 1.5,
-                health: 1.5,
-                speed: 1.5,
-                cost: 10,
-                costMultiplayer: 1.05,
+                attack: 0,
+                health: 0,
+                speed: 0,
+                cost: 0,
+                costMultiplayer: 0,
                 buttonElement: document.getElementById('gladiatorUpgradeButton')
             },
 
             tank: {
-                attack: 1.5,
-                health: 1.75,
-                speed: 1.25,
-                cost: 20,
-                costMultiplayer: 1.05,
+                attack: 0,
+                health: 0,
+                speed: 0,
+                cost: 0,
+                costMultiplayer: 0,
                 buttonElement: document.getElementById('tankUpgradeButton')
             },
 
             assassin: {
-                attack: 1.25,
-                health: 1.25,
-                speed: 1.75,
-                cost: 30,
-                costMultiplayer: 1.05,
+                attack: 0,
+                health: 0,
+                speed: 0,
+                cost: 0,
+                costMultiplayer: 0,
                 buttonElement: document.getElementById('assassinUpgradeButton')
             }
         }

@@ -30,13 +30,15 @@ class Net {
 
             if (response.message == 'waiting') {
                 ui.startWaitingForSecondPlayer();
-                this.socket.on("waitingForSecondPlayer", (secondPlayer) => {
+                this.socket.on("waitingForSecondPlayer", (secondPlayer, data) => {
                     this.secondUsername = secondPlayer;
+                    this.assignVariables(data);
                     this.startGame(0);
                     return;
                 });
             } else if (response.message == 'starting') {
                 this.secondUsername = response.secondUsername;
+                this.assignVariables(response.data);
                 this.startGame(1);
             }
             return;
@@ -54,5 +56,22 @@ class Net {
         delete unitData.animationsFolder;
         this.socket.emit("unitSpawned", unit, unitData);
         this.thisSpawned = true;
+    }
+
+    assignVariables = (data) => {
+        console.log(data)
+        game.towerData = data.towerData;
+
+        for (const [unitName, unitData] of Object.entries(data.unitData)) {
+            for (const [statName, statData] of Object.entries(unitData)) {
+                units[unitName][statName] = statData;
+            }
+        }
+
+        for (const [unitUpgradeName, unitUpgradeData] of Object.entries(data.upgradesData)) {
+            for (const [upgradeName, upgradeData] of Object.entries(unitUpgradeData)) {
+                upgrades.upgrades[unitUpgradeName][upgradeName] = upgradeData;
+            }
+        }
     }
 }

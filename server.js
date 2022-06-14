@@ -1,12 +1,17 @@
 const express = require("express");
 const path = require("path");
 const socket = require("socket.io");
+const {MongoClient} = require('mongodb');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
 let userList = [];
 let gameStarted = false;
+
+let unitData = {};
+let upgradesData = {};
+let towerData = {};
 
 app.use(express.json());
 app.use(express.static('static'))
@@ -29,6 +34,10 @@ const server = app.listen(PORT, function () {
     console.log("http://localhost:" + PORT);
 });
 
+
+// Sockets
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const io = socket(server);
 
 io.on("connection", (socket) => {
@@ -46,8 +55,9 @@ io.on("connection", (socket) => {
         userList.push(username)
 
         if (userList.length == 2) {
-            callback({ error: false, message: 'starting', secondUsername: userList[0] });
-            io.emit("waitingForSecondPlayer", userList[1]);
+            const data = { unitData, upgradesData, towerData }
+            callback({ error: false, message: 'starting', secondUsername: userList[0], data });
+            io.emit("waitingForSecondPlayer", userList[1], data);
             gameStarted = true;
         } else {
             callback({ error: false, message: 'waiting' });
@@ -59,3 +69,59 @@ io.on("connection", (socket) => {
         io.emit("spawnUnit", args)
     });
 });
+
+
+// Database
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+const uri = `mongodb+srv://Admin:Admin@timeofwarcluster.peesiju.mongodb.net/?retryWrites=true&w=majority`;
+MongoClient.connect(uri, (err, client) => {
+
+    // units data
+    client.db('unitData').listCollections().toArray(function(err, collArray) {
+        for(let coll of collArray) {  
+            const collName = coll.name;    
+            coll = client.db('unitData').collection(collName)
+            coll.find({}).toArray(function (err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    result = result[0];
+                    delete result._id;
+                    unitData[collName] = result;
+                }
+            });
+        }
+    })
+
+
+    // upgrades data  
+    client.db('upgradesData').listCollections().toArray(function(err, collArray) {
+        for(let coll of collArray) {  
+            const collName = coll.name;    
+            coll = client.db('upgradesData').collection(collName)
+            coll.find({}).toArray(function (err, result) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    result = result[0];
+                    delete result._id;
+                    upgradesData[collName] = result;
+                }
+            });
+        }
+    })
+   
+
+
+    // tower data
+    client.db('towerData').collection('data').find({}).toArray((err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            result = result[0];
+            delete result._id;
+            towerData = result;
+        }
+    })
+
+})

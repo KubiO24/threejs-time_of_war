@@ -1,11 +1,13 @@
 class Tower extends THREE.Mesh {
-    constructor(side) {
+    constructor(side, data) {
         super() // wywołanie konstruktora klasy z której dziedziczymy czyli z Mesha
 
         this.type = 'tower';
         this.side = side;
-        this.defaultHealth = 1000;
+        this.defaultHealth = data.health;
         this.health = this.defaultHealth;
+        this.slow = data.slow;
+        this.damage = data.damage;
 
         this.geometry = new THREE.CylinderGeometry(50, 50, 200, 16); // radiusTop, radiusBottom, height, radialSegments
         this.material = new THREE.MeshStandardMaterial({ color: '#ff0000', opacity: 0, transparent: true, });
@@ -93,8 +95,8 @@ class Tower extends THREE.Mesh {
 
         if(unitInField == undefined) return;
 
-        unitInField.takeDamage(unitInField.health / 500);
-        if(!unitInField.slowed) unitInField.speed = unitInField.speed * 0.5;    
+        unitInField.takeDamage(unitInField.health / (1000 / this.damage));
+        if(!unitInField.slowed) unitInField.speed = unitInField.speed * this.slow;    
         unitInField.slowed = true;
     }
 

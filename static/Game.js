@@ -86,7 +86,7 @@ class Game {
     }
 
     generatePlayerTower = () => {
-        this.playerTower = new Tower('player');
+        this.playerTower = new Tower('player', this.towerData);
         this.scene.add(this.playerTower);
 
         if (this.playerSide) {
@@ -98,7 +98,7 @@ class Game {
     }
 
     generateOponentTower = () => {
-        this.oponentTower = new Tower('oponent');
+        this.oponentTower = new Tower('oponent', this.towerData);
         this.scene.add(this.oponentTower);
         this.oponentTower.position.x = -this.playerTower.position.x
         this.oponentTower.generateField();
