@@ -12,6 +12,7 @@ let gameStarted = false;
 let unitData = {};
 let upgradesData = {};
 let towerData = {};
+let gameData = {};
 
 app.use(express.json());
 app.use(express.static('static'))
@@ -55,7 +56,7 @@ io.on("connection", (socket) => {
         userList.push(username)
 
         if (userList.length == 2) {
-            const data = { unitData, upgradesData, towerData }
+            const data = { unitData, upgradesData, towerData, gameData }
             callback({ error: false, message: 'starting', secondUsername: userList[0], data });
             io.emit("waitingForSecondPlayer", userList[1], data);
             gameStarted = true;
@@ -112,7 +113,6 @@ MongoClient.connect(uri, (err, client) => {
     })
    
 
-
     // tower data
     client.db('towerData').collection('data').find({}).toArray((err, result) => {
         if (err) {
@@ -124,4 +124,15 @@ MongoClient.connect(uri, (err, client) => {
         }
     })
 
+
+    // game data
+    client.db('gameData').collection('gameData').find({}).toArray((err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            result = result[0];
+            delete result._id;
+            gameData = result;
+        }
+    })
 })

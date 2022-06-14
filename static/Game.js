@@ -5,7 +5,7 @@ class Game {
         this.towerPosition = 600;
         this.cameraDistance = 400;
         this.cameraSpeed = 5;
-        this.currentCameraSpeed = 0;
+        this.currentCameraSpeed = 0;;
 
         this.clock = new THREE.Clock();
 
@@ -50,11 +50,13 @@ class Game {
         this.ground.rotation.x = Math.PI / 2;
         this.scene.add(this.ground)
 
-        this.dt = 1000 / 30;
+        this.dt = 1000 / 60;
         this.timeTarget = 0;
 
         this.render()
     }
+
+
 
     startGame = (playerSide) => {
         this.playerSide = playerSide; // 0 - pierwszy | 1 - drugi
@@ -172,6 +174,7 @@ class Game {
     }
 
     render = () => {
+        console.log(this.dt)
         if (this.gameEnded) return;
 
         if(Date.now() >= this.timeTarget){

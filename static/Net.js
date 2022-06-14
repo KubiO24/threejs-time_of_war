@@ -72,5 +72,6 @@ class Net {
                 upgrades.upgrades[unitUpgradeName][upgradeName] = upgradeData;
             }
         }
+        game.dt = 1000 / data.gameData.framerate;
     }
 }
