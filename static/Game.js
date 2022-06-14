@@ -211,38 +211,6 @@ class Game {
             }
           }
           requestAnimationFrame(this.render);
-
-
-        // TWEEN.update();
-        // this.camera.updateProjectionMatrix();
-
-        // let delta = this.clock.getDelta();
-
-        // // Camera movement
-        // if (Math.abs(this.camera.position.x + this.currentCameraSpeed) < this.towerPosition) this.camera.position.x += this.currentCameraSpeed;
-
-        // // Units movement and attack
-        // if (this.playerUnits != undefined && this.oponentUnits != undefined) {
-        //     for (const playerUnit of this.playerUnits.children) {
-        //         playerUnit.tick();
-        //         playerUnit.mixer.update(delta);
-        //     }
-
-        //     for (const oponentUnit of this.oponentUnits.children) {
-        //         oponentUnit.tick();
-        //         oponentUnit.mixer.update(delta);
-        //     }
-        // }
-
-        // // Tower field damage
-        // if(this.playerTower != undefined && this.oponentTower != undefined) {
-        //     this.playerTower.towerFieldCheck();
-        //     this.oponentTower.towerFieldCheck();
-        // }     
-
-        // requestAnimationFrame(this.render);    
-        // this.renderer.render(this.scene, this.camera);
-        // this.labelRenderer.render(this.scene, this.camera);
     }
 
     cloneFbx(fbx) {
