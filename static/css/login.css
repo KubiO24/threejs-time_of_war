@@ -22,7 +22,6 @@
     flex-direction: column;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.5);
-    ;
     font-family: 'Cinzel', serif;
 }
 
@@ -40,9 +39,9 @@
 }
 
 #loginBox #inputs {
+    display: none;
     position: relative;
     margin-top: 100px;
-    display: flex;
     flex-direction: column;
     align-items: center;
 }

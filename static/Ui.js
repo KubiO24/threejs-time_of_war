@@ -2,6 +2,7 @@ class Ui {
     constructor() {
         this.refreshUpgrades();
         document.getElementById("unitSpawnCost").innerHTML = units.unitSpawnCost;
+        this.startLoading();
     }
     login = () => {
         let username = document.querySelector('#usernameInput').value;
@@ -29,12 +30,15 @@ class Ui {
         this.playMusic();
     }
 
-    startGame = () => {
-        this.playMusic();
-        document.getElementById('inputs').style.display = 'none'
-        document.getElementById('waitingScreen').style.display = 'none'
+    startLoading = () => {
         document.getElementById('loadingScreen').style.display = 'flex'
         units.loadUnits()
+    }
+
+    startGame = () => {
+        this.playMusic();
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('ui').style.display = 'block';
     }
 
     updatePoints = (points) => {

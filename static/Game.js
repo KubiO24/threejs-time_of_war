@@ -51,21 +51,6 @@ class Game {
         this.scene.add(this.ground)
 
         this.render()
-
-        this.raycaster = new THREE.Raycaster();
-        this.mouseVector = new THREE.Vector2();
-        window.addEventListener("mousedown", (event) => {
-            this.mouseVector.x = (event.clientX / window.innerWidth) * 2 - 1;
-            this.mouseVector.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-            this.raycaster.setFromCamera(this.mouseVector, this.camera);
-
-            let intersects = this.raycaster.intersectObjects(this.scene.children);
-            if (intersects.length > 0) {
-                const clickedObject = intersects[0].object;
-
-            }
-        });
     }
 
     startGame = (playerSide) => {
@@ -212,7 +197,7 @@ class Game {
             this.oponentTower.towerFieldCheck();
         }     
 
-        requestAnimationFrame(this.render);
+        requestAnimationFrame(this.render);    
         this.renderer.render(this.scene, this.camera);
         this.labelRenderer.render(this.scene, this.camera);
     }

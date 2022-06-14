@@ -79,21 +79,8 @@ class Units {
                 }
             });
 
-            // let testG = new Unit("gladiator")
-            // let testT = new Unit("tank")
-            // let testA = new Unit('assassin')
-            // testG.position.set(10000, -1000, 10000)
-            // testT.position.set(10000, -1000, 10000)
-            // testA.position.set(10000, -1000, 10000)
-
-            // game.playerUnits.add(testG);
-            // game.playerUnits.add(testT);
-            // game.playerUnits.add(testA);
-
-
             document.getElementById('loadingScreen').style.display = 'none'
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('ui').style.display = 'block';
+            document.getElementById('inputs').style.display = 'flex';
         })
     }
 }
