@@ -73,5 +73,6 @@ class Net {
             }
         }
         game.dt = 1000 / data.gameData.framerate;
+        console.log("Fps limit: " + data.gameData.framerate);
     }
 }
