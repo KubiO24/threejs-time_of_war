@@ -10,7 +10,7 @@ class Tower extends THREE.Mesh {
         this.damage = data.damage;
 
         this.geometry = new THREE.CylinderGeometry(50, 50, 200, 16); // radiusTop, radiusBottom, height, radialSegments
-        this.material = new THREE.MeshStandardMaterial({ color: '#ff0000', opacity: 0, transparent: true, });
+        this.material = new THREE.MeshStandardMaterial({ color: '#000000', opacity: 0, transparent: false, });
         this.loader = new THREE.FBXLoader()
         this.loader.load('../../models/tower2.fbx', (object) => {
             this.model = object;
@@ -30,6 +30,7 @@ class Tower extends THREE.Mesh {
                 }
             });
             this.add(this.model)
+            this.material.transparent = true;
         })
 
         const healthBar = document.createElement('div');
