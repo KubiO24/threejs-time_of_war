@@ -1,2 +1,2 @@
 # Time of War
-Simple strategy game made with three.js and express.
+Multiplayer strategy game made with ThreeJS and Express
